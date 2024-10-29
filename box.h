@@ -3,24 +3,19 @@
 #include "ofMain.h"
 
 class Box {
-	// Defining box types enum
-	enum BoxType {
-		Empty,
-		Number,
-		Mine
-	};
 
+	glm::vec2 position;
+	bool isMine;
 	float boxSize;
-	BoxType boxType;
 	int numberOfAdjacentMines = 0;
-	bool flagged;
-	bool revealed;
-
+	bool flagged = false;
+	bool revealed = false;
 
 public:
+	// Default Constructor
+	Box();
 	// Constructor
-	Box(float boxSize, BoxType boxType, int numberOfAdjacentMines)
-		: boxSize{ boxSize }, boxType{ boxType }, numberOfAdjacentMines{ numberOfAdjacentMines } {}
+	Box(glm::vec2, float, bool, int, bool flagged = false, bool revealed = false);
 
 	void toggleFlag();
 	void display();
