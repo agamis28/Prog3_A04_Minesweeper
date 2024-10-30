@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "box.h"
+#include "iostream"
 
 // Grid Constructor 
 // Constructors Default Settings
@@ -50,6 +51,18 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	currentColumns = columns;
 
 	createBoxes();
+}
+
+// Check if box on grid is hovered. If it is hovered or not change colors
+void Grid::checkBoxHovered(float x, float y) {
+	for (Box& box : boxes) {
+		if (box.containsPosition(x, y)) {
+			box.setColor(box.boxHoveredColor);
+		}
+		else {
+			box.setColor(box.boxDefaultColor);
+		}
+	}
 }
 
 void Grid::displayGrid() {

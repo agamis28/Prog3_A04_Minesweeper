@@ -19,18 +19,18 @@ void ofApp::setup() {
 
 	ofBackground(200, 200, 200);
 
-	glm::vec2 box1position(0, 0);
-	glm::vec2 box2position(10, 0);
-
 	mainGrid = Grid(8, 8, 10, boxSize);
 	mainGrid.generateGrid();
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
+	// When pressing restart button, generate new grid with corresponding gui given rows and columns (mines)
 	if (restartBtn) {
 		mainGrid.generateGrid(gridRows, gridColumns, numberOfMines, boxSize);
 	}
+
+	mainGrid.checkBoxHovered(ofGetMouseX(), ofGetMouseY());
 }
 
 //--------------------------------------------------------------

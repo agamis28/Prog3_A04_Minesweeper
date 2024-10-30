@@ -5,7 +5,7 @@
 
 class Grid {
 
-	// Private Members
+	// Private Members In Constructor
 	int currentRows;
 	int currentColumns;
 	int currentmines;
@@ -24,5 +24,6 @@ public:
 	void createBoxes();
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
+	void checkBoxHovered(float mousePositionX, float mousePositionY);
 	void displayGrid();
 };
