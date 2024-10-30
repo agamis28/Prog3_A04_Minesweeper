@@ -4,6 +4,7 @@
 
 class Box {
 
+	// Private Memebers
 	glm::vec2 position;
 	bool isMine;
 	float boxSize;
