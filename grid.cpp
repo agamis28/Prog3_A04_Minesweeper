@@ -64,7 +64,11 @@ void Grid::generateGrid() {
 	// Clear out old boxes if there is any
 	boxes.clear();
 
+	// Creating boxes for rows and columns
 	createBoxes();
+
+	// Setting randomized boxes to mines
+	setRandomMineLocations(currentmines);
 }
 
 // Uses parameters instead of default grid members
@@ -77,8 +81,10 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	currentRows = rows;
 	currentColumns = columns;
 
+	// Clear out old boxes if there is any
 	createBoxes();
 
+	// Setting randomized boxes to mines
 	setRandomMineLocations(mines);
 }
 
