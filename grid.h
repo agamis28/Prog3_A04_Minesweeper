@@ -26,10 +26,10 @@ public:
 	Grid(int currentRows, int currentColumns, int currentMines, float boxSize);
 
 	// Functions
-	void setRandomMineLocations(int gridSize, int mineCount);
+	void setRandomMineLocations(int mineCount);
 	void createBoxes();
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
-	void displayGrid(ofImage mineImage);
+	void displayGrid(ofImage& mineImage);
 };

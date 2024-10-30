@@ -21,7 +21,7 @@ Grid::Grid(int currentRows, int currentColumns, int currentmines, float boxSize)
 }
 
 // Set up mineCount of random mine locations on in range of boxes vector 
-void Grid::setRandomMineLocations(int gridSize, int mineCount) {
+void Grid::setRandomMineLocations(int mineCount) {
 	// Setting up randomization
 	std::random_device randomDevice;
 	std::mt19937 gen(randomDevice());
@@ -75,6 +75,8 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	currentColumns = columns;
 
 	createBoxes();
+
+	setRandomMineLocations(mines);
 }
 
 // Check if box on grid is hovered. If it is hovered or not change colors
@@ -89,7 +91,7 @@ void Grid::checkBoxHovered(float x, float y) {
 	}
 }
 
-void Grid::displayGrid(ofImage mineImage) {
+void Grid::displayGrid(ofImage& mineImage) {
 	for (Box& box : boxes) {
 		box.display(mineImage);
 	}

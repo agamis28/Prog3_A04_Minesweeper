@@ -34,7 +34,7 @@ bool Box::containsPosition(float x, float y) {
 	return x >= position.x && x <= position.x + boxSize && y >= position.y && y <= position.y + boxSize; // Returns true if position param is within the bounds of box.
 }
 
-void Box::display(ofImage mineImage) {
+void Box::display(ofImage& mineImage) {
 	if (!revealed) {
 		ofSetColor(255, 255, 255);
 		ofDrawRectangle(position.x, position.y, boxSize, boxSize);

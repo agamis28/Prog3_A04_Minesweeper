@@ -24,7 +24,7 @@ void ofApp::setup() {
 	mainGrid = Grid(8, 8, 25, boxSize);
 	mainGrid.generateGrid();
 
-	mainGrid.setRandomMineLocations(64, 10);
+	mainGrid.setRandomMineLocations(10);
 }
 
 //--------------------------------------------------------------
@@ -33,8 +33,6 @@ void ofApp::update() {
 	if (restartBtn) {
 		mainGrid.generateGrid(gridRows, gridColumns, numberOfMines, boxSize);
 	}
-
-	mainGrid.checkBoxHovered(ofGetMouseX(), ofGetMouseY());
 }
 
 //--------------------------------------------------------------
@@ -56,7 +54,7 @@ void ofApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-
+	mainGrid.checkBoxHovered(x, y);
 }
 
 //--------------------------------------------------------------

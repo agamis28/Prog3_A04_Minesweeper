@@ -28,5 +28,5 @@ public:
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
 	bool containsPosition(float x, float y); // Returns true if x and y positions are within the bounds of this box's position and size
-	void display(ofImage mineImage);
+	void display(ofImage& mineImage);
 };
