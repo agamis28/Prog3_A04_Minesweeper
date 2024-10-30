@@ -1,13 +1,23 @@
 #include "ofApp.h"
 #include "box.h"
 
-
 Box box1;
 Box box2;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	ofSetupOpenGL(100, 100, OF_WINDOW);
+	// Setting up gui
+	gui.setup();
+	gui.add(gridColumns.setup("# of Columns", 8, 5, 50));
+	gui.add(gridRows.setup("# of Rows", 8, 5, 50));
+	gui.add(numberOfMines.setup("# of Mines", 10, 2, 450));
+	gui.add(restartBtn.setup("Submit"));
+
+	gui.add(flaggingMode.setup("Flagging Mode", false));
+
+	//ofSetupOpenGL(100, 100, OF_WINDOW);
+	ofBackground(200, 200, 200);
+
 
 	glm::vec2 box1position(0, 0);
 	glm::vec2 box2position(10, 0);
