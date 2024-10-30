@@ -50,7 +50,7 @@ void Box::display(ofImage& mineImage) {
 			// Draw Bomb image
 			if (mineImage.isAllocated()) {
 				ofSetColor(255);
-				mineImage.draw(position.x, position.y, boxSize - 1, boxSize - 1);
+				mineImage.draw(position.x, position.y, boxSize - 1, (boxSize - 1) * 0.94);
 			}
 		}
 	}

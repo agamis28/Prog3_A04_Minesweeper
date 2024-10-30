@@ -48,8 +48,11 @@ void Grid::setRandomMineLocations(int mineCount) {
 void Grid::createBoxes() {
 	for (int row = 0; row < currentRows; row++) {
 		for (int column = 0; column < currentColumns; column++) {
-			float x = column * boxSize;
-			float y = row * boxSize;
+
+			// Set position based on which row and column. Also setting to center of screen.
+			float x = column * boxSize + (ofGetWidth() / 2 - currentColumns / 2 * boxSize);
+			float y = row * boxSize + (ofGetHeight() / 2 - currentRows / 2 * boxSize);
+			// Adding to boxes vector
 			boxes.emplace_back(Box(glm::vec2(x, y), boxSize, false, 0));
 		}
 	}
