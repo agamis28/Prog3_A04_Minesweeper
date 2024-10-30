@@ -24,6 +24,7 @@ void ofApp::setup() {
 
 	mainGrid = Grid(8, 8, 25, boxSize);
 	mainGrid.generateGrid();
+	mainGrid.setNeighbours();
 }
 
 //--------------------------------------------------------------

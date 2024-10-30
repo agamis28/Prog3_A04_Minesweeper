@@ -100,6 +100,59 @@ void Grid::checkBoxHovered(float x, float y) {
 	}
 }
 
+void Grid::setNeighbours() {
+	for (int i = 0; i < boxes.size(); i++) {
+		// Check out of bounds conditions
+
+		int numberOfNeighbours = 0;
+
+		// Check if neighbouring boxes are mines, if is add to number of neighbours
+
+		// Check if in bounds if in bounds: 
+		// Check if mine, if it is a mine, increment number of mines
+		// Top Neighbour
+		//if (i - 1 > 0) {
+		//	if (boxes[i - currentRows].isMine) {
+		//		numberOfNeighbours++;
+		//	}
+		//}
+		//if (i - 1 > 0 && i + 1 < currentColumns) {
+		//	if (boxes[i - currentRows].isMine) {
+		//		numberOfNeighbours++;
+		//	}
+		//}
+
+		// Out of bounds debug
+		std::cout << "Mine index: " << i << "\n";
+
+		if (i % currentColumns == 0) {
+			std::cout << "Out of bounds left" << "\n";;
+		}
+		else {
+			std::cout << "In of bounds left" << "\n";;
+		}
+		if (i - currentRows < 0) {
+			std::cout << "Out of bounds top" << "\n";;
+		}
+		else {
+			std::cout << "In of bounds top" << "\n";;
+		}
+		if ((i + currentRows) / currentRows >= currentRows) {
+			std::cout << "Out of bounds bottom" << "\n";;
+		}
+		else {
+			std::cout << "In of bounds bottom" << "\n";;
+		}
+		if (i + 1 / currentColumns == 2) {
+			std::cout << "Out of bounds right" << "\n";;
+		}
+		else {
+			std::cout << "In of bounds right" << "\n";;
+		}
+
+	}
+}
+
 void Grid::displayGrid(ofImage& mineImage) {
 	for (Box& box : boxes) {
 		box.display(mineImage);

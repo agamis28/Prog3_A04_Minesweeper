@@ -35,22 +35,31 @@ bool Box::containsPosition(float x, float y) {
 }
 
 void Box::display(ofImage& mineImage) {
+
+	// When not
 	if (!revealed) {
 		ofSetColor(255, 255, 255);
 		ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-		if (!isMine && !revealed) {
-			ofSetColor(0, 0, 0);
-			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+		ofSetColor(0, 0, 0);
+		ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
-			ofSetColor(boxInnerColor);
-			ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
-		}
-		else {
-			// Draw Bomb image
+		ofSetColor(boxInnerColor);
+		ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+	}
+	else {
+		// If mine display mine, else display number of adjacent mines, if no adjacent mines show empty
+		if (isMine) {
+			// Draw Bomb image when is mine and revealed
 			if (mineImage.isAllocated()) {
 				ofSetColor(255);
 				mineImage.draw(position.x, position.y, boxSize - 1, (boxSize - 1) * 0.94);
+			}
+		}
+		else {
+			// When there is adjacent mines display a number
+			if (numberOfAdjacentMines != 0) {
+				// display adjacent mines
 			}
 		}
 	}
