@@ -19,6 +19,7 @@ Grid::Grid(int currentRows, int currentColumns, int currentmines, float boxSize)
 	boxSize{ boxSize } {
 }
 
+// Generates a grid using default grid members
 void Grid::generateGrid() {
 
 	// Clear out old boxes if there is any
@@ -33,11 +34,13 @@ void Grid::generateGrid() {
 	}
 }
 
+// Uses parameters instead of default grid members
 void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 
 	// Clear out old boxes if there is any
 	boxes.clear();
 
+	// Changing current rows to parameter giving rows
 	currentRows = rows;
 	currentColumns = columns;
 
