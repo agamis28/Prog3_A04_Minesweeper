@@ -21,6 +21,10 @@ void Box::toggleFlag() {
 
 }
 
+void Box::setMine() {
+	isMine = true;
+}
+
 void Box::setColor(ofColor newColor) {
 	boxInnerColor = newColor;
 }
@@ -30,15 +34,24 @@ bool Box::containsPosition(float x, float y) {
 	return x >= position.x && x <= position.x + boxSize && y >= position.y && y <= position.y + boxSize; // Returns true if position param is within the bounds of box.
 }
 
-void Box::display() {
+void Box::display(ofImage mineImage) {
 	if (!revealed) {
 		ofSetColor(255, 255, 255);
 		ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-		ofSetColor(0, 0, 0);
-		ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+		if (!isMine && !revealed) {
+			ofSetColor(0, 0, 0);
+			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
-		ofSetColor(boxInnerColor);
-		ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+			ofSetColor(boxInnerColor);
+			ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+		}
+		else {
+			// Draw Bomb image
+			if (mineImage.isAllocated()) {
+				ofSetColor(255);
+				mineImage.draw(position.x, position.y, boxSize - 1, boxSize - 1);
+			}
+		}
 	}
 }

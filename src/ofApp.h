@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "box.h"
+#include "grid.h"
 
 class ofApp : public ofBaseApp {
 

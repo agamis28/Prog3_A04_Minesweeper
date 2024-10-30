@@ -1,10 +1,9 @@
 
 #include "ofApp.h"
-#include "box.h"
-#include "grid.h"
 
 Grid mainGrid;
 float boxSize = 20.0f;
+ofImage mineImage;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -17,10 +16,15 @@ void ofApp::setup() {
 
 	//gui.add(flaggingMode.setup("Flagging Mode", false));
 
+	// Setting up mine image
+	mineImage.load("mineImage.png");
+
 	ofBackground(200, 200, 200);
 
-	mainGrid = Grid(8, 8, 10, boxSize);
+	mainGrid = Grid(8, 8, 25, boxSize);
 	mainGrid.generateGrid();
+
+	mainGrid.setRandomMineLocations(64, 10);
 }
 
 //--------------------------------------------------------------
@@ -35,7 +39,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	mainGrid.displayGrid();
+	mainGrid.displayGrid(mineImage);
 
 	gui.draw();
 }
