@@ -18,9 +18,10 @@ public:
 	// Default Constructor
 	Grid();
 	// Constructor
-	Grid(int, int, int, float);
+	Grid(int currentRows, int currentColumns, int currentMines, float boxSize);
 
 	// Functions
-	void generateGrid(int, int, int, float);
+	void generateGrid();
+	void generateGrid(int rows, int columns, int mines, float boxSize);
 	void displayGrid();
 };

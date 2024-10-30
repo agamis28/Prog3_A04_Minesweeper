@@ -15,7 +15,7 @@ revealed{ false }
 Box::Box(glm::vec2 position, float boxSize, bool isMine, int numberOfAdjacentMines, bool flagged, bool revealed)
 	: position{ position }, boxSize{
 	boxSize
-}, isMine{ isMine }, numberOfAdjacentMines{ numberOfAdjacentMines }, flagged{ false }, revealed{ false }{}
+	}, isMine{ isMine }, numberOfAdjacentMines{ numberOfAdjacentMines }, flagged{ false }, revealed{ false } {}
 
 void Box::toggleFlag() {
 
@@ -24,12 +24,12 @@ void Box::toggleFlag() {
 void Box::display() {
 	if (!revealed) {
 		ofSetColor(255, 255, 255);
-		ofDrawRectangle(position.x - 2, position.y - 2, boxSize + 4, boxSize + 4);
+		ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
 		ofSetColor(0, 0, 0);
-		ofDrawRectangle(position.x - 1, position.y - 1, boxSize + 2, boxSize + 2);
+		ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
-		ofSetColor(25, 25, 25);
-		ofDrawRectangle(position.x - 1, position.y - 1, boxSize + 2, boxSize + 2);
+		ofSetColor(150, 150, 150);
+		ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
 	}
 }

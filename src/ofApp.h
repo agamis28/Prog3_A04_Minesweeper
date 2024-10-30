@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
+//#include "ofxGui.h"
 
 class ofApp : public ofBaseApp {
 
@@ -23,12 +23,12 @@ public:
 	void gotMessage(ofMessage msg);
 
 	// OFX Initalized Variables
-	ofxPanel gui;
+	//ofxPanel gui;
 
-	ofxIntSlider gridColumns;
-	ofxIntSlider gridRows;
-	ofxIntSlider numberOfMines;
-	ofxButton restartBtn;
+	//ofxIntSlider gridColumns;
+	//ofxIntSlider gridRows;
+	//ofxIntSlider numberOfMines;
+	//ofxButton restartBtn;
 
-	ofxToggle flaggingMode;
+	//ofxToggle flaggingMode;
 };
