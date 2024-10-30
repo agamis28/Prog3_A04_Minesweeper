@@ -19,12 +19,8 @@ Grid::Grid(int currentRows, int currentColumns, int currentmines, float boxSize)
 	boxSize{ boxSize } {
 }
 
-// Generates a grid using default grid members
-void Grid::generateGrid() {
-
-	// Clear out old boxes if there is any
-	boxes.clear();
-
+// Creating boxes with correct rows and columns
+void Grid::createBoxes() {
 	for (int row = 0; row < currentRows; row++) {
 		for (int column = 0; column < currentColumns; column++) {
 			float x = column * boxSize;
@@ -32,6 +28,15 @@ void Grid::generateGrid() {
 			boxes.emplace_back(Box(glm::vec2(x, y), boxSize, false, 0));
 		}
 	}
+}
+
+// Generates a grid using default grid members
+void Grid::generateGrid() {
+
+	// Clear out old boxes if there is any
+	boxes.clear();
+
+	createBoxes();
 }
 
 // Uses parameters instead of default grid members
@@ -44,13 +49,7 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	currentRows = rows;
 	currentColumns = columns;
 
-	for (int row = 0; row < currentRows; row++) {
-		for (int column = 0; column < currentColumns; column++) {
-			float x = column * boxSize;
-			float y = row * boxSize;
-			boxes.emplace_back(Box(glm::vec2(x, y), boxSize, false, 0));
-		}
-	}
+	createBoxes();
 }
 
 void Grid::displayGrid() {
