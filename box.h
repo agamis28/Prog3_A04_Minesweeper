@@ -30,7 +30,9 @@ public:
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
 	void setAdjacent(int numberOfNeighbours);
+	int getAdjacent();
 	void setReveal();
+	bool getRevealed();
 	bool containsPosition(float x, float y); // Returns true if x and y positions are within the bounds of this box's position and size
 	void display(ofImage& mineImage, ofTrueTypeFont& numberFont);
 };

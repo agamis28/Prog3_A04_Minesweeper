@@ -31,10 +31,19 @@ void Box::setAdjacent(int numberOfNeighbours) {
 	numberOfAdjacentMines = numberOfNeighbours;
 }
 
+int Box::getAdjacent() {
+	return numberOfAdjacentMines;
+}
+
 
 void Box::setReveal() {
 	revealed = true;
 }
+
+bool Box::getRevealed() {
+	return revealed;
+}
+
 
 void Box::setColor(ofColor newColor) {
 	boxInnerColor = newColor;

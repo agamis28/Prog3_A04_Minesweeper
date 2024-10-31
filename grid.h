@@ -26,12 +26,13 @@ public:
 	Grid(int currentRows, int currentColumns, int currentMines, float boxSize);
 
 	// Functions
-	void setRandomMineLocations();
 	void createBoxes();
+	void setRandomMineLocations();
+	void setNeighbours();
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
 	void revealClickedBox(float mousePositionX, float mousePositionY);
-	void setNeighbours();
+	void revealEmptyNeighbours(int boxIndex);
 	void displayGrid(ofImage& mineImage, ofTrueTypeFont& numberFont);
 };
