@@ -96,7 +96,7 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	setRandomMineLocations();
 
 	// Set Neighbours
-	//setNeighbours(); !!!!!! CAUSES CRASHING // NEED TO BE FIXED
+	setNeighbours(); //!!!!!! CAUSES CRASHING // NEED TO BE FIXED
 
 	for (Box& box : boxes) {
 		box.setReveal(); // TO BE REMOVED
@@ -127,30 +127,36 @@ void Grid::setNeighbours() {
 			// Access boxes[i]
 		}
 
-		std::cout << "Boxes size: " << boxes.size() << ", Rows: " << currentRows << ", Columns: " << currentColumns << std::endl;
+		//std::cout << "Boxes size: " << boxes.size() << ", Rows: " << currentRows << ", Columns: " << currentColumns << std::endl;
 
 		// Check if neighbouring boxes are mines, if is add to number of neighbours
 
 		// Check if in bounds if in bounds: 
 		// Check if mine, if it is a mine, increment number of mines
 
-		// Top Neighbours
-		if (i - currentRows >= 0) {
+		//Top Neighbours
+		if (i - currentColumns >= 0) {
+			std::cout << "Mine index: " << i << " Top in bounds - boxes index: " << i - currentColumns << "\n";
+
 			// Top
-			if (boxes[i - currentRows].isMine) {
+			if (boxes[i - currentColumns].isMine) {
 				numberOfNeighbours++;
 			}
 
 			// Top Right
 			if ((i + 1) % currentColumns != 0) {
-				if (boxes[i - currentRows + 1].isMine) {
+				std::cout << "Mine index: " << i << " Top Right in bounds - boxes index: " << i - currentColumns + 1 << "\n";
+
+				if (boxes[i - currentColumns + 1].isMine) {
 					numberOfNeighbours++;
 				}
 			}
 
 			// Top Left
 			if (i % currentColumns != 0) {
-				if (boxes[i - currentRows - 1].isMine) {
+				std::cout << "Mine index: " << i << " Top Left in bounds - boxes index: " << i - currentColumns - 1 << "\n";
+
+				if (boxes[i - currentColumns - 1].isMine) {
 					numberOfNeighbours++;
 				}
 			}
@@ -159,6 +165,8 @@ void Grid::setNeighbours() {
 		// Mid Neighbours
 		// Right Neighbour
 		if ((i + 1) % currentColumns != 0) {
+			std::cout << "Mine index: " << i << " Right in bounds - boxes index: " << i + 1 << "\n";
+
 			if (boxes[i + 1].isMine) {
 				numberOfNeighbours++;
 			}
@@ -166,28 +174,36 @@ void Grid::setNeighbours() {
 
 		// Left Neighbour
 		if (i % currentColumns != 0) {
+			std::cout << "Mine index: " << i << " Left in bounds - boxes index: " << i - 1 << "\n";
+
 			if (boxes[i - 1].isMine) {
 				numberOfNeighbours++;
 			}
 		}
 
 		// Bottom Neighbours
-		if (i + currentRows <= (boxes.size() - 1)) {
+		if (i + currentColumns <= (boxes.size() - 1)) {
+			std::cout << "Mine index: " << i << " Bottom in bounds - boxes index: " << i + currentColumns << "\n";
+
 			// Bottom
-			if (boxes[i + currentRows].isMine) {
+			if (boxes[i + currentColumns].isMine) {
 				numberOfNeighbours++;
 			}
 
 			// Bottom Right
 			if ((i + 1) % currentColumns != 0) {
-				if (boxes[i + currentRows + 1].isMine) {
+				std::cout << "Mine index: " << i << " Bottom right in bounds - boxes index: " << i + currentColumns + 1 << "\n";
+
+				if (boxes[i + currentColumns + 1].isMine) {
 					numberOfNeighbours++;
 				}
 			}
 
 			// Bottom Left
 			if (i % currentColumns != 0) {
-				if (boxes[i + currentRows - 1].isMine) {
+				std::cout << "Mine index: " << i << " Bottom left in bounds - boxes index: " << i + currentColumns - 1 << "\n";
+
+				if (boxes[i + currentColumns - 1].isMine) {
 					numberOfNeighbours++;
 				}
 			}
