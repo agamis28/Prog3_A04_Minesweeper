@@ -31,6 +31,7 @@ public:
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
+	void revealClickedBox(float mousePositionX, float mousePositionY);
 	void setNeighbours();
 	void displayGrid(ofImage& mineImage, ofTrueTypeFont& numberFont);
 };

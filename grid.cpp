@@ -72,10 +72,6 @@ void Grid::generateGrid() {
 
 	// Set Neighbours
 	setNeighbours();
-
-	for (Box& box : boxes) {
-		box.setReveal(); // TO BE REMOVED
-	}
 }
 
 // Uses parameters instead of default grid members
@@ -96,11 +92,7 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	setRandomMineLocations();
 
 	// Set Neighbours
-	setNeighbours(); //!!!!!! CAUSES CRASHING // NEED TO BE FIXED
-
-	for (Box& box : boxes) {
-		box.setReveal(); // TO BE REMOVED
-	}
+	setNeighbours();
 }
 
 // Check if box on grid is hovered. If it is hovered or not change colors
@@ -111,6 +103,14 @@ void Grid::checkBoxHovered(float x, float y) {
 		}
 		else {
 			box.setColor(box.boxDefaultColor);
+		}
+	}
+}
+
+void Grid::revealClickedBox(float x, float y) {
+	for (Box& box : boxes) {
+		if (box.containsPosition(x, y)) {
+			box.setReveal();
 		}
 	}
 }
