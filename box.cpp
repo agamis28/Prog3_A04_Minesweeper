@@ -1,4 +1,5 @@
 #include "box.h"
+#include <string>
 
 // Box Constructor 
 // Constructors Default Settings
@@ -25,6 +26,12 @@ void Box::setMine() {
 	isMine = true;
 }
 
+
+void Box::setAdjacent(int numberOfNeighbours) {
+	numberOfAdjacentMines = numberOfNeighbours;
+}
+
+
 void Box::setReveal() {
 	revealed = true;
 }
@@ -38,14 +45,14 @@ bool Box::containsPosition(float x, float y) {
 	return x >= position.x && x <= position.x + boxSize && y >= position.y && y <= position.y + boxSize; // Returns true if position param is within the bounds of box.
 }
 
-void Box::display(ofImage& mineImage) {
+void Box::display(ofImage& mineImage, ofTrueTypeFont& font) {
 
 	// When not
 	if (!revealed) {
-		ofSetColor(255, 255, 255);
+		ofSetColor(0);
 		ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-		ofSetColor(0, 0, 0);
+		ofSetColor(255);
 		ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
 		ofSetColor(boxInnerColor);
@@ -54,26 +61,29 @@ void Box::display(ofImage& mineImage) {
 	else {
 		// If mine display mine, else display number of adjacent mines, if no adjacent mines show empty
 		if (isMine) {
-			ofSetColor(255, 255, 255);
+			ofSetColor(0);
 			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-			ofSetColor(0, 0, 0);
+			ofSetColor(255);
 			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 			// Draw Bomb image when is mine and revealed
 			if (mineImage.isAllocated()) {
 				ofSetColor(255);
-				mineImage.draw(position.x, position.y, boxSize - 1, (boxSize - 1) * 0.94);
+				mineImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize * 0.70f, (boxSize * 0.70f) * 0.94);
 			}
 		}
 		else {
-			ofSetColor(255, 255, 255);
+			ofSetColor(0);
 			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-			ofSetColor(0, 0, 0);
+			ofSetColor(255);
 			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 			// When there is adjacent mines display a number
 			if (numberOfAdjacentMines != 0) {
 				// display adjacent mines
+				ofSetColor(0);
+				ofPushMatrix();
+				font.drawString(std::to_string(numberOfAdjacentMines), position.x + (boxSize / 3), position.y + (boxSize / 1.25f));
 			}
 		}
 	}

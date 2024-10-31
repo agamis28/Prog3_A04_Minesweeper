@@ -21,11 +21,13 @@ void ofApp::setup() {
 	// Setting up mine image
 	mineImage.load("mineImage.png");
 
+	// Setting up font
+	font.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
+
 	ofBackground(200, 200, 200);
 
 	mainGrid = Grid(8, 8, mineCount, boxSize);
 	mainGrid.generateGrid();
-	mainGrid.setNeighbours();
 }
 
 //--------------------------------------------------------------
@@ -45,7 +47,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	mainGrid.displayGrid(mineImage);
+	mainGrid.displayGrid(mineImage, font);
 
 	gui.draw();
 

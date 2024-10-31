@@ -33,4 +33,7 @@ public:
 	ofxButton restartBtn;
 
 	//ofxToggle flaggingMode;
+
+	// Initalizing Font
+	ofTrueTypeFont font;
 };

@@ -29,7 +29,8 @@ public:
 	void toggleFlag();
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
+	void setAdjacent(int numberOfNeighbours);
 	void setReveal();
 	bool containsPosition(float x, float y); // Returns true if x and y positions are within the bounds of this box's position and size
-	void display(ofImage& mineImage);
+	void display(ofImage& mineImage, ofTrueTypeFont& numberFont);
 };

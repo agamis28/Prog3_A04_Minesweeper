@@ -39,7 +39,6 @@ void Grid::setRandomMineLocations() {
 		for (int mineLocation : mineLocations) {
 			if (i == mineLocation) {
 				boxes[i].setMine();
-				boxes[i].setReveal(); // REMOVE
 			}
 		}
 	}
@@ -70,6 +69,13 @@ void Grid::generateGrid() {
 
 	// Setting randomized boxes to mines
 	setRandomMineLocations();
+
+	// Set Neighbours
+	setNeighbours();
+
+	for (Box& box : boxes) {
+		box.setReveal(); // TO BE REMOVED
+	}
 }
 
 // Uses parameters instead of default grid members
@@ -88,6 +94,13 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 
 	// Setting randomized boxes to mines
 	setRandomMineLocations();
+
+	// Set Neighbours
+	//setNeighbours(); !!!!!! CAUSES CRASHING // NEED TO BE FIXED
+
+	for (Box& box : boxes) {
+		box.setReveal(); // TO BE REMOVED
+	}
 }
 
 // Check if box on grid is hovered. If it is hovered or not change colors
@@ -103,31 +116,35 @@ void Grid::checkBoxHovered(float x, float y) {
 }
 
 void Grid::setNeighbours() {
+	std::cout << "Checking neighbors for box size: " << boxes.size() << "\n";
+
 	for (int i = 0; i < boxes.size(); i++) {
 		// Check out of bounds conditions
 
 		int numberOfNeighbours = 0;
+
+		if (i < boxes.size()) {
+			// Access boxes[i]
+		}
+
+		std::cout << "Boxes size: " << boxes.size() << ", Rows: " << currentRows << ", Columns: " << currentColumns << std::endl;
 
 		// Check if neighbouring boxes are mines, if is add to number of neighbours
 
 		// Check if in bounds if in bounds: 
 		// Check if mine, if it is a mine, increment number of mines
 
-		std::cout << "Index: " << i << "\n";
-
 		// Top Neighbours
 		if (i - currentRows >= 0) {
 			// Top
 			if (boxes[i - currentRows].isMine) {
 				numberOfNeighbours++;
-				std::cout << "Top Incremented" << "\n";
 			}
 
 			// Top Right
 			if ((i + 1) % currentColumns != 0) {
 				if (boxes[i - currentRows + 1].isMine) {
 					numberOfNeighbours++;
-					std::cout << "Top RIght Incremented" << "\n";
 				}
 			}
 
@@ -135,7 +152,6 @@ void Grid::setNeighbours() {
 			if (i % currentColumns != 0) {
 				if (boxes[i - currentRows - 1].isMine) {
 					numberOfNeighbours++;
-					std::cout << "Top Left Incremented" << "\n";
 				}
 			}
 		}
@@ -145,7 +161,6 @@ void Grid::setNeighbours() {
 		if ((i + 1) % currentColumns != 0) {
 			if (boxes[i + 1].isMine) {
 				numberOfNeighbours++;
-				std::cout << "Mid Right Incremented" << "\n";
 			}
 		}
 
@@ -153,7 +168,6 @@ void Grid::setNeighbours() {
 		if (i % currentColumns != 0) {
 			if (boxes[i - 1].isMine) {
 				numberOfNeighbours++;
-				std::cout << "Mid Left Incremented" << "\n";
 			}
 		}
 
@@ -162,14 +176,12 @@ void Grid::setNeighbours() {
 			// Bottom
 			if (boxes[i + currentRows].isMine) {
 				numberOfNeighbours++;
-				std::cout << "Bottom Incremented" << "\n";
 			}
 
 			// Bottom Right
 			if ((i + 1) % currentColumns != 0) {
 				if (boxes[i + currentRows + 1].isMine) {
 					numberOfNeighbours++;
-					std::cout << "Bottom Right Incremented" << "\n";
 				}
 			}
 
@@ -177,10 +189,11 @@ void Grid::setNeighbours() {
 			if (i % currentColumns != 0) {
 				if (boxes[i + currentRows - 1].isMine) {
 					numberOfNeighbours++;
-					std::cout << "Bottom Left Incremented" << "\n";
 				}
 			}
 		}
+
+		boxes[i].setAdjacent(numberOfNeighbours);
 
 		//std::cout << "Mine index: " << i << " # of Neighbours: " << numberOfNeighbours << "\n";
 
@@ -222,8 +235,8 @@ void Grid::setNeighbours() {
 	}
 }
 
-void Grid::displayGrid(ofImage& mineImage) {
+void Grid::displayGrid(ofImage& mineImage, ofTrueTypeFont& font) {
 	for (Box& box : boxes) {
-		box.display(mineImage);
+		box.display(mineImage, font);
 	}
 }
