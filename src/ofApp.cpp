@@ -3,6 +3,7 @@
 
 Grid mainGrid;
 float boxSize = 45.0f;
+int mineCount = 10;
 ofImage mineImage;
 bool invalidGameSettings = false;
 
@@ -22,7 +23,7 @@ void ofApp::setup() {
 
 	ofBackground(200, 200, 200);
 
-	mainGrid = Grid(8, 8, 25, boxSize);
+	mainGrid = Grid(8, 8, mineCount, boxSize);
 	mainGrid.generateGrid();
 	mainGrid.setNeighbours();
 }

@@ -25,6 +25,10 @@ void Box::setMine() {
 	isMine = true;
 }
 
+void Box::setReveal() {
+	revealed = true;
+}
+
 void Box::setColor(ofColor newColor) {
 	boxInnerColor = newColor;
 }
@@ -50,6 +54,11 @@ void Box::display(ofImage& mineImage) {
 	else {
 		// If mine display mine, else display number of adjacent mines, if no adjacent mines show empty
 		if (isMine) {
+			ofSetColor(255, 255, 255);
+			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
+
+			ofSetColor(0, 0, 0);
+			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 			// Draw Bomb image when is mine and revealed
 			if (mineImage.isAllocated()) {
 				ofSetColor(255);
@@ -57,6 +66,11 @@ void Box::display(ofImage& mineImage) {
 			}
 		}
 		else {
+			ofSetColor(255, 255, 255);
+			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
+
+			ofSetColor(0, 0, 0);
+			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 			// When there is adjacent mines display a number
 			if (numberOfAdjacentMines != 0) {
 				// display adjacent mines

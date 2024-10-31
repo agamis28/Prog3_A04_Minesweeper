@@ -10,7 +10,7 @@ class Grid {
 	// Private Members In Constructor
 	int currentRows;
 	int currentColumns;
-	int currentmines;
+	int currentMines;
 	float boxSize;
 
 	// Setting mine location vector
@@ -26,7 +26,7 @@ public:
 	Grid(int currentRows, int currentColumns, int currentMines, float boxSize);
 
 	// Functions
-	void setRandomMineLocations(int mineCount);
+	void setRandomMineLocations();
 	void createBoxes();
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
