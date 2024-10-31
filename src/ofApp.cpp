@@ -52,7 +52,9 @@ void ofApp::draw() {
 	gui.draw();
 
 	if (invalidGameSettings) {
-		ofDrawBitmapStringHighlight("Sorry there are too many mines for the number of boxes! Please Try Again", ofGetWidth() / 2, ofGetHeight() / 4);
+		ofDrawBitmapStringHighlight("Sorry there are too many mines", ofGetWidth() / 2 - 50, ofGetHeight() / 2);
+		ofDrawBitmapStringHighlight("for the number of boxes!", ofGetWidth() / 2 - 30, ofGetHeight() / 2 + 25);
+		ofDrawBitmapStringHighlight("Please Try Again", ofGetWidth() / 2, ofGetHeight() / 2 + 50);
 	}
 }
 
