@@ -45,7 +45,7 @@ void Grid::setRandomMineLocations() {
 	mineLocations.clear();
 
 	// Randomly choose a unique location in grid boxes vector while the mineLocations vector is less than mineCount
-	while (mineLocations.size() < currentMines) {
+	while (mineLocations.size() <= currentMines) {
 		mineLocations.emplace_back(dis(gen));
 	}
 
@@ -247,7 +247,17 @@ void Grid::checkBoxHovered(float x, float y) {
 void Grid::revealClickedBox(float x, float y) {
 	for (size_t i = 0; i < boxes.size(); i++) {
 		if (boxes[i].containsPosition(x, y)) {
-			revealEmptyNeighbours(i);
+			// Only when clicking an empty, reveal emptys
+			if (boxes[i].getAdjacent() == 0 && boxes[i].isMine == false) {
+				revealEmptyNeighbours(i);
+			}
+			else {
+				// When not revealed reveal
+				if (!boxes[i].getRevealed()) {
+					boxes[i].setReveal();
+
+				}
+			}
 		}
 	}
 }
@@ -263,52 +273,66 @@ void Grid::revealEmptyNeighbours(int boxIndex) {
 		boxes[boxIndex].setReveal();
 	}
 
-	if (boxes[boxIndex].getAdjacent() == 0) {
+	if (boxes[boxIndex].getAdjacent() > 0) {
+		return;
+	}
 
-		// Top Neighbour
-		// Check In bounds
-		if (boxIndex - currentColumns >= 0) {
-			// Check Adjacent
-			if (boxes[boxIndex - currentColumns].getAdjacent() == 0) {
-				// Reveal
-				boxes[boxIndex - currentColumns].setReveal();
-				// Reveal its neighbours
-				revealEmptyNeighbours(boxIndex - currentColumns);
-			}
-		}
+	// Top Neighbour
+	// Check In bounds
+	if (boxIndex - currentColumns >= 0) {
+		// Check Adjacent
 
-		// Mid Neighbours
+		// Reveal its neighbours
+		revealEmptyNeighbours(boxIndex - currentColumns);
 
-		// Right Neighbour
-		// Check In bounds
+		// Top Right
 		if ((boxIndex + 1) % currentColumns != 0) {
-			// Check Adjacent
-			if (boxes[boxIndex + 1].getAdjacent() == 0) {
-				// Reveal it, and its neighbours
-				revealEmptyNeighbours(boxIndex + 1);
-			}
+			revealEmptyNeighbours(boxIndex - currentColumns + 1);
 		}
-		// Left Neighbour
-		// Check In bounds
+
+		// Top Left
 		if (boxIndex % currentColumns != 0) {
-			// Check Adjacent
-			if (boxes[boxIndex - 1].getAdjacent() == 0) {
-				// Reveal it, and its neighbours
-				revealEmptyNeighbours(boxIndex - 1);
-			}
-		}
-
-		// Bottom Neighbours
-		// Check In bounds
-		if (boxIndex + currentColumns <= (boxes.size() - 1)) {
-
-			if (boxes[boxIndex + currentColumns].getAdjacent() == 0) {
-				// Reveal it, and its neighbours
-				revealEmptyNeighbours(boxIndex + currentColumns);
-			}
+			revealEmptyNeighbours(boxIndex - currentColumns - 1);
 		}
 	}
+
+
+	// Mid Neighbours
+
+	// Right Neighbour
+	// Check In bounds
+	if ((boxIndex + 1) % currentColumns != 0) {
+		// Check Adjacent
+			// Reveal it, and its neighbours
+		revealEmptyNeighbours(boxIndex + 1);
+	}
+	// Left Neighbour
+	// Check In bounds
+	if (boxIndex % currentColumns != 0) {
+		// Check Adjacent
+			// Reveal it, and its neighbours
+		revealEmptyNeighbours(boxIndex - 1);
+	}
+
+	// Bottom Neighbours
+	// Check In bounds
+	if (boxIndex + currentColumns <= (boxes.size() - 1)) {
+		// Reveal it, and its neighbours
+		revealEmptyNeighbours(boxIndex + currentColumns);
+
+		// Bottom Right
+		if ((boxIndex + 1) % currentColumns != 0) {
+			revealEmptyNeighbours(boxIndex + currentColumns + 1);
+		}
+
+		// Bottom Left
+		if (boxIndex % currentColumns != 0) {
+			revealEmptyNeighbours(boxIndex + currentColumns - 1);
+		}
+	}
+
 }
+
 
 
 
