@@ -26,6 +26,10 @@ void Box::setMine() {
 	isMine = true;
 }
 
+bool Box::getMine() {
+	return isMine;
+}
+
 
 void Box::setAdjacent(int numberOfNeighbours) {
 	numberOfAdjacentMines = numberOfNeighbours;

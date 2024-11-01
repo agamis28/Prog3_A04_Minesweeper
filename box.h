@@ -8,6 +8,7 @@ class Box {
 	// Private Memebers
 	glm::vec2 position;
 	float boxSize;
+	bool isMine;
 	int numberOfAdjacentMines = 0;
 	bool flagged = false;
 	bool revealed = true;
@@ -19,9 +20,6 @@ public:
 	// Constructor
 	Box(glm::vec2 position, float boxSize, bool isMine, int numberOfAdjacentMines, bool flagged = false, bool revealed = true);
 
-	// Public member
-	bool isMine;
-
 	// Public members colors
 	ofColor boxDefaultColor = boxInnerColor;
 	ofColor boxHoveredColor = ofColor(100, 100, 100);
@@ -29,6 +27,7 @@ public:
 	void toggleFlag();
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
+	bool getMine();
 	void setAdjacent(int numberOfNeighbours);
 	int getAdjacent();
 	void setReveal();
