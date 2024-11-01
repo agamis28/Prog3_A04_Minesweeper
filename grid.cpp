@@ -20,7 +20,7 @@ Grid::Grid(int currentRows, int currentColumns, int currentMines, float boxSize)
 	boxSize{ boxSize } {
 }
 
-// Creating boxes with correct rows and columns
+// Creating boxes with correct and current rows and columns, place them into vector 'boxes'
 void Grid::createBoxes() {
 	for (int row = 0; row < currentRows; row++) {
 		for (int column = 0; column < currentColumns; column++) {
@@ -49,6 +49,7 @@ void Grid::setRandomMineLocations() {
 		mineLocations.emplace_back(dis(gen));
 	}
 
+	// Loop through all boxes. If box is one of the mine locations set as a mine
 	for (int i = 0; i < boxes.size(); i++) {
 		for (int mineLocation : mineLocations) {
 			if (i == mineLocation) {
@@ -59,101 +60,106 @@ void Grid::setRandomMineLocations() {
 }
 
 
+// Loops through all boxes. Checks all neighbours of box, checks in a grid fashion following rows and columns. If neighbours are a mine, add to number of neighbours.
+// After going through all neighbours. Set number of neighbours to number of adjacent mines on box
 void Grid::setNeighbours() {
-	std::cout << "Checking neighbors for box size: " << boxes.size() << "\n";
+	//std::cout << "Checking neighbors for box size: " << boxes.size() << "\n";
+	//std::cout << "Boxes size: " << boxes.size() << ", Rows: " << currentRows << ", Columns: " << currentColumns;
 
+
+	// Looping through all boxes to check neighbours
 	for (int i = 0; i < boxes.size(); i++) {
-		// Check out of bounds conditions
 
+		// Counter for number of mines found in neighbours
+		// Increment when finding mine as neighbour
 		int numberOfNeighbours = 0;
 
-		if (i < boxes.size()) {
-			// Access boxes[i]
-		}
-
-		//std::cout << "Boxes size: " << boxes.size() << ", Rows: " << currentRows << ", Columns: " << currentColumns << std::endl;
-
-		// Check if neighbouring boxes are mines, if is add to number of neighbours
-
-		// Check if in bounds if in bounds: 
-		// Check if mine, if it is a mine, increment number of mines
-
 		//Top Neighbours
+		// Check if in bounds of top of grid
 		if (i - currentColumns >= 0) {
 			//std::cout << "Mine index: " << i << " Top in bounds - boxes index: " << i - currentColumns << "\n";
 
 			// Top
-			if (boxes[i - currentColumns].isMine) {
+			if (boxes[i - currentColumns].getMine()) {
 				numberOfNeighbours++;
 			}
 
 			// Top Right
+			// Check if in bounds of right of grid
 			if ((i + 1) % currentColumns != 0) {
 				//std::cout << "Mine index: " << i << " Top Right in bounds - boxes index: " << i - currentColumns + 1 << "\n";
 
-				if (boxes[i - currentColumns + 1].isMine) {
+				if (boxes[i - currentColumns + 1].getMine()) {
 					numberOfNeighbours++;
 				}
 			}
 
 			// Top Left
+			// Check if in bounds of left of grid
 			if (i % currentColumns != 0) {
 				//std::cout << "Mine index: " << i << " Top Left in bounds - boxes index: " << i - currentColumns - 1 << "\n";
 
-				if (boxes[i - currentColumns - 1].isMine) {
+				if (boxes[i - currentColumns - 1].getMine()) {
 					numberOfNeighbours++;
 				}
 			}
 		}
 
-		// Mid Neighbours
 		// Right Neighbour
+		// Check if in bounds of right of grid
 		if ((i + 1) % currentColumns != 0) {
 			//std::cout << "Mine index: " << i << " Right in bounds - boxes index: " << i + 1 << "\n";
 
-			if (boxes[i + 1].isMine) {
+			if (boxes[i + 1].getMine()) {
 				numberOfNeighbours++;
 			}
 		}
 
 		// Left Neighbour
+		// Check if in bounds of left of grid
 		if (i % currentColumns != 0) {
 			//std::cout << "Mine index: " << i << " Left in bounds - boxes index: " << i - 1 << "\n";
 
-			if (boxes[i - 1].isMine) {
+			if (boxes[i - 1].getMine()) {
 				numberOfNeighbours++;
 			}
 		}
 
 		// Bottom Neighbours
+		// Check if in bounds of bottom of grid
 		if (i + currentColumns <= (boxes.size() - 1)) {
 			//std::cout << "Mine index: " << i << " Bottom in bounds - boxes index: " << i + currentColumns << "\n";
 
 			// Bottom
-			if (boxes[i + currentColumns].isMine) {
+			if (boxes[i + currentColumns].getMine()) {
 				numberOfNeighbours++;
 			}
 
 			// Bottom Right
+			// Check if in bounds of right of grid
 			if ((i + 1) % currentColumns != 0) {
 				//std::cout << "Mine index: " << i << " Bottom right in bounds - boxes index: " << i + currentColumns + 1 << "\n";
 
-				if (boxes[i + currentColumns + 1].isMine) {
+				if (boxes[i + currentColumns + 1].getMine()) {
 					numberOfNeighbours++;
 				}
 			}
 
 			// Bottom Left
+			// Check if in bounds of left of grid
 			if (i % currentColumns != 0) {
 				//std::cout << "Mine index: " << i << " Bottom left in bounds - boxes index: " << i + currentColumns - 1 << "\n";
 
-				if (boxes[i + currentColumns - 1].isMine) {
+				if (boxes[i + currentColumns - 1].getMine()) {
 					numberOfNeighbours++;
 				}
 			}
 		}
 
+		// Setting number of neighbours with mines to the number of adjacent mines on box
 		boxes[i].setAdjacent(numberOfNeighbours);
+
+		// **vv DEBUG vv**
 
 		//std::cout << "Mine index: " << i << " # of Neighbours: " << numberOfNeighbours << "\n";
 
@@ -192,6 +198,7 @@ void Grid::setNeighbours() {
 		//	std::cout << "Out of bounds right" << "\n";;
 		//}
 
+		//**^^ DEBUG ^^**
 	}
 }
 
@@ -217,7 +224,7 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	// Clear out old boxes if there is any
 	boxes.clear();
 
-	// Changing current rows to parameter giving rows
+	// Changing current to parameter given values
 	currentRows = rows;
 	currentColumns = columns;
 	currentMines = mines;
@@ -244,11 +251,16 @@ void Grid::checkBoxHovered(float x, float y) {
 	}
 }
 
+// When box is clicked reveal box or many empty boxes
 void Grid::revealClickedBox(float x, float y) {
+
+	// Loop through all boxes and see which one the given mouse positions it is on
 	for (size_t i = 0; i < boxes.size(); i++) {
+
+		// If mouse is on box reveal the box if not empty
 		if (boxes[i].containsPosition(x, y)) {
-			// Only when clicking an empty, reveal emptys
-			if (boxes[i].getAdjacent() == 0 && boxes[i].isMine == false) {
+			// Only when clicking an empty, reveal other adjacent emptys
+			if (boxes[i].getAdjacent() == 0 && boxes[i].getMine() == false) {
 				revealEmptyNeighbours(i);
 			}
 			else {
@@ -262,10 +274,11 @@ void Grid::revealClickedBox(float x, float y) {
 	}
 }
 
+// Reveals all neighbouring empty boxes and the first number the chunk of empty boxes reveal
 void Grid::revealEmptyNeighbours(int boxIndex) {
-	std::cout << "Box index: " << boxIndex << "\n";
+	//std::cout << "Box index: " << boxIndex << "\n";
 
-	// If box is already revealed, end function
+	// If box is already revealed, end function, else reveal box
 	if (boxes[boxIndex].getRevealed()) {
 		return;
 	}
@@ -273,70 +286,73 @@ void Grid::revealEmptyNeighbours(int boxIndex) {
 		boxes[boxIndex].setReveal();
 	}
 
+	// If box has adjacent mines stop running reveal empty neighbours
 	if (boxes[boxIndex].getAdjacent() > 0) {
 		return;
 	}
 
-	// Top Neighbour
+	// Top Neighbours
 	// Check In bounds
 	if (boxIndex - currentColumns >= 0) {
-		// Check Adjacent
-
-		// Reveal its neighbours
+		// Top
+		// Reveal it, and its neighbours
 		revealEmptyNeighbours(boxIndex - currentColumns);
 
 		// Top Right
+		// Check In bounds
 		if ((boxIndex + 1) % currentColumns != 0) {
+			// Reveal it, and its neighbours
 			revealEmptyNeighbours(boxIndex - currentColumns + 1);
 		}
 
 		// Top Left
+		// Check In bounds
 		if (boxIndex % currentColumns != 0) {
+			// Reveal it, and its neighbours
 			revealEmptyNeighbours(boxIndex - currentColumns - 1);
 		}
 	}
-
-
-	// Mid Neighbours
 
 	// Right Neighbour
 	// Check In bounds
 	if ((boxIndex + 1) % currentColumns != 0) {
 		// Check Adjacent
-			// Reveal it, and its neighbours
+		// Reveal it, and its neighbours
 		revealEmptyNeighbours(boxIndex + 1);
 	}
 	// Left Neighbour
 	// Check In bounds
 	if (boxIndex % currentColumns != 0) {
 		// Check Adjacent
-			// Reveal it, and its neighbours
+		// Reveal it, and its neighbours
 		revealEmptyNeighbours(boxIndex - 1);
 	}
 
 	// Bottom Neighbours
 	// Check In bounds
 	if (boxIndex + currentColumns <= (boxes.size() - 1)) {
+		// Bottom
 		// Reveal it, and its neighbours
 		revealEmptyNeighbours(boxIndex + currentColumns);
 
 		// Bottom Right
+		// Check In bounds
 		if ((boxIndex + 1) % currentColumns != 0) {
 			revealEmptyNeighbours(boxIndex + currentColumns + 1);
 		}
 
 		// Bottom Left
+		// Check In bounds
 		if (boxIndex % currentColumns != 0) {
+			// Reveal it, and its neighbours
 			revealEmptyNeighbours(boxIndex + currentColumns - 1);
 		}
 	}
 
 }
 
-
-
-
-
+// Runs 'display' function on all of box classes in boxes vector, to display whole grid
+// Takes in a loaded image and font to give to box class
 void Grid::displayGrid(ofImage& mineImage, ofTrueTypeFont& font) {
 	for (Box& box : boxes) {
 		box.display(mineImage, font);

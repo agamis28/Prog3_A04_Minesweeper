@@ -5,9 +5,10 @@
 
 #include <random>
 
+// A class to contain a grid organized vector of boxes for minesweeper game
 class Grid {
 
-	// Private Members In Constructor
+	// Private members for Grid class
 	int currentRows;
 	int currentColumns;
 	int currentMines;
@@ -22,10 +23,10 @@ public:
 
 	// Default Constructor
 	Grid();
-	// Constructor
+	// Constructor when given parameters
 	Grid(int currentRows, int currentColumns, int currentMines, float boxSize);
 
-	// Functions
+	// Grid class forward declaring functions
 	void createBoxes();
 	void setRandomMineLocations();
 	void setNeighbours();

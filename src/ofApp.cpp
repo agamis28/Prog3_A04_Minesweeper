@@ -5,7 +5,7 @@ Grid mainGrid;
 float boxSize = 45.0f;
 int mineCount = 10;
 ofImage mineImage;
-bool invalidGameSettings = false;
+bool invalidGameSettings = false; // When invalid game settings is false, do not restart game
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -24,9 +24,12 @@ void ofApp::setup() {
 	// Setting up font
 	font.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
 
+	// Background
 	ofBackground(200, 200, 200);
 
+	// Setting up grid
 	mainGrid = Grid(8, 8, mineCount, boxSize);
+	// Generating the grid (Random mine placement, checking all neighbouring mine count)
 	mainGrid.generateGrid();
 }
 
@@ -40,6 +43,7 @@ void ofApp::update() {
 			mainGrid.generateGrid(gridRows, gridColumns, numberOfMines, boxSize);
 		}
 		else {
+			// When too many mines set invalidGameSettings to true
 			invalidGameSettings = true;
 		}
 	}
@@ -47,10 +51,13 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+	// Drawing Grid
 	mainGrid.displayGrid(mineImage, font);
 
+	// Drawing gui
 	gui.draw();
 
+	// When game is invalid, let player know with bitmap graphics
 	if (invalidGameSettings) {
 		ofDrawBitmapStringHighlight("Sorry there are too many mines", ofGetWidth() / 2 - 50, ofGetHeight() / 2);
 		ofDrawBitmapStringHighlight("for the number of boxes!", ofGetWidth() / 2 - 30, ofGetHeight() / 2 + 25);
@@ -70,6 +77,7 @@ void ofApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
+	// When mouse is moved, check the box it is hovered over on grid and changes its color
 	mainGrid.checkBoxHovered(x, y);
 }
 
@@ -80,6 +88,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
+	// When mouse is pressed, reveal the clicked box
 	mainGrid.revealClickedBox(x, y);
 }
 

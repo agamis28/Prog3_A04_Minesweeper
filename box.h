@@ -3,9 +3,10 @@
 #include "ofMain.h"
 #include <string>
 
+// A class for a box in a grid on a minesweeper game
 class Box {
 
-	// Private Memebers
+	// Private members for Box class
 	glm::vec2 position;
 	float boxSize;
 	bool isMine;
@@ -13,17 +14,21 @@ class Box {
 	bool flagged = false;
 	bool revealed = true;
 
+	// Color box when not revealed
 	ofColor boxInnerColor = ofColor(150, 150, 150);
+
 public:
+
 	// Default Constructor
 	Box();
-	// Constructor
+	// Constructor when given parameters
 	Box(glm::vec2 position, float boxSize, bool isMine, int numberOfAdjacentMines, bool flagged = false, bool revealed = true);
 
-	// Public members colors
+	// Public members for colors (Allows other classes to get box colors)
 	ofColor boxDefaultColor = boxInnerColor;
 	ofColor boxHoveredColor = ofColor(100, 100, 100);
 
+	// Box class forward declaring functions
 	void toggleFlag();
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
