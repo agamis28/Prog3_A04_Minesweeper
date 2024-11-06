@@ -1,6 +1,7 @@
 #include "grid.h"
 #include "box.h"
 #include "iostream"
+#include <unordered_set>
 
 // Grid Constructor 
 // Constructors Default Settings
@@ -36,27 +37,34 @@ void Grid::createBoxes() {
 
 // Set up mineCount of random mine locations on in range of boxes vector 
 void Grid::setRandomMineLocations() {
+	// Clear old mine locations
+	mineLocations.clear();
+
+	// Temporary set to hold unique mine locations
+	std::unordered_set<int> uniqueMineLocations;
+
 	// Setting up randomization
 	std::random_device randomDevice;
 	std::mt19937 gen(randomDevice());
 	std::uniform_int_distribution<> dis(0, boxes.size() - 1);
 
-	// Clear old mine locations
-	mineLocations.clear();
-
-	// Randomly choose a unique location in grid boxes vector while the mineLocations vector is less than mineCount
-	while (mineLocations.size() < currentMines) {
-		mineLocations.emplace_back(dis(gen));
+	// Generate currentMines unique mine locations
+	while (uniqueMineLocations.size() < currentMines) {
+		int newMine = dis(gen);
+		// Will only insert if newMine is not already on the set
+		uniqueMineLocations.insert(newMine);
 	}
 
-	// Loop through all boxes. If box is one of the mine locations set as a mine
-	for (int i = 0; i < boxes.size(); i++) {
-		for (int mineLocation : mineLocations) {
-			if (i == mineLocation) {
-				boxes[i].setMine();
-			}
-		}
+	// Transfer unique mine locations to actual mine locations
+	mineLocations.assign(uniqueMineLocations.begin(), uniqueMineLocations.end());
+
+	// Set mines in the boxes based on unique mine locations
+	for (int location : mineLocations) {
+		boxes[location].setMine();
 	}
+
+	//std::cout << "Expected mines: " << currentMines << ", Actual mines placed: " << mineLocations.size() << std::endl;
+
 }
 
 
@@ -240,6 +248,14 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 
 	// Set Neighbours
 	setNeighbours();
+
+	//int count = 0;
+	//for (Box& box : boxes) {
+	//	if (box.getMine()) {
+	//		count++;
+	//		std::cout << "Mine: " << count << "\n";
+	//	}
+	//}
 }
 
 // Check if box on grid is hovered. If it is hovered or not change colors
@@ -269,43 +285,43 @@ int Grid::getClickedBox(float x, float y) {
 }
 
 // When flag mode is on, toggle if box is flagged and is not flagged
-void Grid::flagClickedBox(int box) {
+void Grid::flagClickedBox(int clickedBox) {
 	// When box given (box clicked) is within boxes array continue functionality
-	if (box >= 0 && box <= currentRows * currentColumns) {
+	if (clickedBox >= 0 && clickedBox <= currentRows * currentColumns) {
 		// When box isn't flagged yet, increment flagged count on this click, else decrement flagged count
-		if (!boxes[box].getFlagged()) {
+		if (!boxes[clickedBox].getFlagged()) {
 			flaggedCount++;
 		}
 		else {
 			flaggedCount--;
 		}
 
-		std::cout << "Flagged Count: " << flaggedCount << "\n";
+		//std::cout << "Flagged Count: " << flaggedCount << "\n";
+
 		// Toggle if box is flagged or not flagged
-		boxes[box].toggleFlag();
+		boxes[clickedBox].toggleFlag();
 	}
 }
 
-// When box is clicked reveal box or many empty boxes
-void Grid::revealClickedBox(float x, float y) {
+// When box is clicked and is not currently flagged, reveal box or many empty boxes
+void Grid::revealClickedBox(int clickedBox) {
 
-	// Loop through all boxes and see which one the given mouse positions it is on
-	for (size_t i = 0; i < boxes.size(); i++) {
+	// When box given (box clicked) is within boxes array AND box is not flagged continue functionality
+	if (clickedBox >= 0 && clickedBox <= currentRows * currentColumns && !boxes[clickedBox].getFlagged()) {
 
-		// If mouse is on box reveal the box if not empty
-		if (boxes[i].containsPosition(x, y)) {
-			// Only when clicking an empty, reveal other adjacent emptys
-			if (boxes[i].getAdjacent() == 0 && boxes[i].getMine() == false) {
-				revealEmptyNeighbours(i);
-			}
-			else {
-				// When not revealed reveal
-				if (!boxes[i].getRevealed()) {
-					boxes[i].setReveal();
-
-				}
-			}
+		// Only when clicking an empty, reveal other adjacent emptys
+		if (boxes[clickedBox].getAdjacent() == 0 && boxes[clickedBox].getMine() == false) {
+			revealEmptyNeighbours(clickedBox);
 		}
+		else {
+
+			// When not revealed reveal
+			if (!boxes[clickedBox].getRevealed()) {
+				boxes[clickedBox].setReveal();
+			}
+
+		}
+
 	}
 }
 

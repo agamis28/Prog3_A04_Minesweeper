@@ -97,7 +97,7 @@ void ofApp::mousePressed(int x, int y, int button) {
 	}
 	else {
 		// When mouse is pressed, reveal the clicked box
-		mainGrid.revealClickedBox(x, y);
+		mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
 	}
 }
 

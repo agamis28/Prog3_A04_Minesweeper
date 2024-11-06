@@ -38,7 +38,7 @@ public:
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
 	int getClickedBox(float mousePositionX, float mousePositionY);
 	void flagClickedBox(int boxClicked);
-	void revealClickedBox(float mousePositionX, float mousePositionY);
+	void revealClickedBox(int boxClicked);
 	void revealEmptyNeighbours(int boxIndex);
 	int getFlaggedAmount();
 	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
