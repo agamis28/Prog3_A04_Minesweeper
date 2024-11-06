@@ -261,11 +261,24 @@ int Grid::getClickedBox(float x, float y) {
 		}
 	}
 
+	// When not clicking any of boxes return -1
 	return -1;
 }
 
+// When flag mode is on, toggle if box is flagged and is not flagged
 void Grid::flagClickedBox(int box) {
+	// When box given (box clicked) is within boxes array continue functionality
 	if (box >= 0 && box <= currentRows * currentColumns) {
+		// When box isn't flagged yet, increment flagged count on this click, else decrement flagged count
+		if (!boxes[box].getFlagged()) {
+			flaggedCount++;
+		}
+		else {
+			flaggedCount--;
+		}
+
+		std::cout << "Flagged Count: " << flaggedCount << "\n";
+		// Toggle if box is flagged or not flagged
 		boxes[box].toggleFlag();
 	}
 }
@@ -368,6 +381,10 @@ void Grid::revealEmptyNeighbours(int boxIndex) {
 		}
 	}
 
+}
+
+int Grid::getFlaggedAmount() {
+	return flaggedCount;
 }
 
 // Runs 'display' function on all of box classes in boxes vector, to display whole grid

@@ -17,6 +17,9 @@ class Grid {
 	// Setting mine location vector
 	std::vector<int>mineLocations;
 
+	// Number of boxes flagged
+	int flaggedCount = 0;
+
 public:
 	// Public Members
 	std::vector<Box>boxes;
@@ -37,5 +40,6 @@ public:
 	void flagClickedBox(int boxClicked);
 	void revealClickedBox(float mousePositionX, float mousePositionY);
 	void revealEmptyNeighbours(int boxIndex);
+	int getFlaggedAmount();
 	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont);
 };

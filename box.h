@@ -30,6 +30,7 @@ public:
 
 	// Box class forward declaring functions
 	void toggleFlag();
+	bool getFlagged();
 	void setColor(ofColor settingBoxInnerColor);
 	void setMine();
 	bool getMine();

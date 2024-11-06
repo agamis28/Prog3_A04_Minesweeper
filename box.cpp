@@ -23,6 +23,10 @@ void Box::toggleFlag() {
 	flagged = !flagged;
 }
 
+bool Box::getFlagged() {
+	return flagged;
+}
+
 // Sets 'isMine' to true
 void Box::setMine() {
 	isMine = true;
