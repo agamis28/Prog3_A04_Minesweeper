@@ -24,8 +24,9 @@ void ofApp::setup() {
 	// Setting up flag image
 	flagImage.load("flagImage.png");
 
-	// Setting up font
-	font.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
+	// Setting up fonts
+	numberFont.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
+	textFont.load("VCR_OSD_MONO_1.001.ttf", boxSize / 4);
 
 	// Background
 	ofBackground(200, 200, 200);
@@ -55,7 +56,7 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 	// Drawing Grid
-	mainGrid.displayGrid(mineImage, flagImage, font);
+	mainGrid.displayGrid(mineImage, flagImage, numberFont, textFont);
 
 	// Drawing gui
 	gui.draw();

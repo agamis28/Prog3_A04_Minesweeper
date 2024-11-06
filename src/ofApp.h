@@ -33,8 +33,10 @@ public:
 	ofxButton restartBtn;
 	ofxToggle flaggingMode;
 
-	// Initalizing Font
-	ofTrueTypeFont font;
+	// Initalizing Fonts
+	ofTrueTypeFont numberFont;
+	ofTrueTypeFont textFont;
+
 
 	// Images
 	ofImage mineImage;

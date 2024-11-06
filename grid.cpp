@@ -45,7 +45,7 @@ void Grid::setRandomMineLocations() {
 	mineLocations.clear();
 
 	// Randomly choose a unique location in grid boxes vector while the mineLocations vector is less than mineCount
-	while (mineLocations.size() <= currentMines) {
+	while (mineLocations.size() < currentMines) {
 		mineLocations.emplace_back(dis(gen));
 	}
 
@@ -224,6 +224,9 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	// Clear out old boxes if there is any
 	boxes.clear();
 
+	// Restart flagged count
+	flaggedCount = 0;
+
 	// Changing current to parameter given values
 	currentRows = rows;
 	currentColumns = columns;
@@ -387,10 +390,17 @@ int Grid::getFlaggedAmount() {
 	return flaggedCount;
 }
 
+// Drawing Grid Information
+void Grid::displayMinesLeft(ofTrueTypeFont& font) {
+	ofSetColor(0);
+	font.drawString("Mines Left: " + std::to_string(currentMines - flaggedCount), ofGetWidth() / 2 - boxSize, 50);
+}
+
 // Runs 'display' function on all of box classes in boxes vector, to display whole grid
 // Takes in a loaded image and font to give to box class
-void Grid::displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& font) {
+void Grid::displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont) {
 	for (Box& box : boxes) {
-		box.display(mineImage, flagImage, font);
+		box.display(mineImage, flagImage, numberFont);
 	}
+	displayMinesLeft(textFont);
 }

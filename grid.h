@@ -41,5 +41,6 @@ public:
 	void revealClickedBox(float mousePositionX, float mousePositionY);
 	void revealEmptyNeighbours(int boxIndex);
 	int getFlaggedAmount();
-	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont);
+	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
+	void displayMinesLeft(ofTrueTypeFont& font);
 };
