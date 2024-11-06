@@ -38,5 +38,5 @@ public:
 	void setReveal();
 	bool getRevealed();
 	bool containsPosition(float x, float y); // Returns true if x and y positions are within the bounds of this box's position and size
-	void display(ofImage& mineImage, ofTrueTypeFont& numberFont);
+	void display(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont);
 };

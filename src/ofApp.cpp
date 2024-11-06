@@ -4,7 +4,6 @@
 Grid mainGrid;
 float boxSize = 45.0f;
 int mineCount = 10;
-ofImage mineImage;
 bool invalidGameSettings = false; // When invalid game settings is false, do not restart game
 
 //--------------------------------------------------------------
@@ -15,11 +14,15 @@ void ofApp::setup() {
 	gui.add(gridRows.setup("# of Rows", 8, 5, 25));
 	gui.add(numberOfMines.setup("# of Mines", 10, 2, 450));
 	gui.add(restartBtn.setup("Restart"));
+	gui.add(flaggingMode.setup("Flagging Mode", false));
 
 	//gui.add(flaggingMode.setup("Flagging Mode", false));
 
 	// Setting up mine image
 	mineImage.load("mineImage.png");
+
+	// Setting up flag image
+	flagImage.load("flagImage.png");
 
 	// Setting up font
 	font.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
@@ -52,7 +55,7 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 	// Drawing Grid
-	mainGrid.displayGrid(mineImage, font);
+	mainGrid.displayGrid(mineImage, flagImage, font);
 
 	// Drawing gui
 	gui.draw();

@@ -20,7 +20,7 @@ Box::Box(glm::vec2 position, float boxSize, bool isMine, int numberOfAdjacentMin
 
 // Used for later
 void Box::toggleFlag() {
-
+	flagged = !flagged;
 }
 
 // Sets 'isMine' to true
@@ -64,7 +64,7 @@ bool Box::containsPosition(float x, float y) {
 }
 
 // Displays box when not revealed. When revealed only show background draw squares. If revealed and is mine show a mine image. If revealed and has adjacent mines, draw those associated numbers.
-void Box::display(ofImage& mineImage, ofTrueTypeFont& font) {
+void Box::display(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& font) {
 
 	// When not revealed draw default box
 	if (!revealed) {
@@ -79,6 +79,15 @@ void Box::display(ofImage& mineImage, ofTrueTypeFont& font) {
 		// Cover
 		ofSetColor(boxInnerColor);
 		ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+
+		if (flagged) {
+			// Draw flag image when image is allocated
+			if (flagImage.isAllocated()) {
+				// Flag Image
+				ofSetColor(255);
+				flagImage.draw(position.x + (boxSize * 0.25f), position.y + (boxSize * 0.25f), (boxSize * 0.6f), (boxSize * 0.6f) * 0.94f);
+			}
+		}
 	}
 	else {
 		// When revealed, do not draw cover anymore

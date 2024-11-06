@@ -35,5 +35,5 @@ public:
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
 	void revealClickedBox(float mousePositionX, float mousePositionY);
 	void revealEmptyNeighbours(int boxIndex);
-	void displayGrid(ofImage& mineImage, ofTrueTypeFont& numberFont);
+	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont);
 };

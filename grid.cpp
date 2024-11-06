@@ -353,8 +353,8 @@ void Grid::revealEmptyNeighbours(int boxIndex) {
 
 // Runs 'display' function on all of box classes in boxes vector, to display whole grid
 // Takes in a loaded image and font to give to box class
-void Grid::displayGrid(ofImage& mineImage, ofTrueTypeFont& font) {
+void Grid::displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& font) {
 	for (Box& box : boxes) {
-		box.display(mineImage, font);
+		box.display(mineImage, flagImage, font);
 	}
 }

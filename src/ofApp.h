@@ -31,9 +31,12 @@ public:
 	ofxIntSlider gridRows;
 	ofxIntSlider numberOfMines;
 	ofxButton restartBtn;
-
-	//ofxToggle flaggingMode;
+	ofxToggle flaggingMode;
 
 	// Initalizing Font
 	ofTrueTypeFont font;
+
+	// Images
+	ofImage mineImage;
+	ofImage flagImage;
 };
