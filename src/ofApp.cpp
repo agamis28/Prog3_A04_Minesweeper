@@ -91,8 +91,13 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-	// When mouse is pressed, reveal the clicked box
-	mainGrid.revealClickedBox(x, y);
+	if (flaggingMode) {
+		mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
+	}
+	else {
+		// When mouse is pressed, reveal the clicked box
+		mainGrid.revealClickedBox(x, y);
+	}
 }
 
 //--------------------------------------------------------------

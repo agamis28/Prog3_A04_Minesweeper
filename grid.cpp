@@ -251,6 +251,25 @@ void Grid::checkBoxHovered(float x, float y) {
 	}
 }
 
+int Grid::getClickedBox(float x, float y) {
+	// Loop through all boxes and see which one the given mouse positions it is on
+	for (size_t i = 0; i < boxes.size(); i++) {
+
+		// If mouse is on box reveal the box if not empty
+		if (boxes[i].containsPosition(x, y)) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void Grid::flagClickedBox(int box) {
+	if (box >= 0 && box <= currentRows * currentColumns) {
+		boxes[box].toggleFlag();
+	}
+}
+
 // When box is clicked reveal box or many empty boxes
 void Grid::revealClickedBox(float x, float y) {
 

@@ -33,6 +33,8 @@ public:
 	void generateGrid();
 	void generateGrid(int rows, int columns, int mines, float boxSize);
 	void checkBoxHovered(float mousePositionX, float mousePositionY);
+	int getClickedBox(float mousePositionX, float mousePositionY);
+	void flagClickedBox(int boxClicked);
 	void revealClickedBox(float mousePositionX, float mousePositionY);
 	void revealEmptyNeighbours(int boxIndex);
 	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont);
