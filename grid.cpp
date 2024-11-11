@@ -329,8 +329,8 @@ void Grid::revealClickedBox(int clickedBox) {
 void Grid::revealEmptyNeighbours(int boxIndex) {
 	//std::cout << "Box index: " << boxIndex << "\n";
 
-	// If box is already revealed, end function, else reveal box
-	if (boxes[boxIndex].getRevealed()) {
+	// If box is already revealed or is flagged, end function, else reveal box
+	if (boxes[boxIndex].getRevealed() || boxes[boxIndex].getFlagged()) {
 		return;
 	}
 	else {
