@@ -1,10 +1,15 @@
 
 #include "ofApp.h"
+#include <chrono>
+#include <thread>
 
 Grid mainGrid;
 float boxSize = 45.0f;
 int mineCount = 10;
 bool invalidGameSettings = false; // When invalid game settings is false, do not restart game
+bool gameInProgress = false;
+int timerCount = 0;
+float lastTime = 0;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -45,10 +50,24 @@ void ofApp::update() {
 		if (mainGrid.boxes.size() > numberOfMines) {
 			invalidGameSettings = false;
 			mainGrid.generateGrid(gridRows, gridColumns, numberOfMines, boxSize);
+			gameInProgress = false;
+			timerCount = 0;
 		}
 		else {
 			// When too many mines set invalidGameSettings to true
 			invalidGameSettings = true;
+		}
+	}
+
+	// Timer
+	if (gameInProgress) {
+		// Get the elapsed time since the start of the game
+		float currentTime = ofGetElapsedTimef();
+
+		// If one second has passed, increment the timer count
+		if (currentTime - lastTime >= 1.0f) {
+			timerCount++;
+			lastTime = currentTime;  // Update last time to current time
 		}
 	}
 }
@@ -60,6 +79,10 @@ void ofApp::draw() {
 
 	// Drawing gui
 	gui.draw();
+
+	// Draw Timer
+	ofSetColor(0);
+	textFont.drawString("Timer: " + std::to_string(timerCount), ofGetWidth() / 2 + boxSize * 2, 50);
 
 	// When game is invalid, let player know with bitmap graphics
 	if (invalidGameSettings) {
@@ -92,6 +115,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
+	gameInProgress = true;
 	if (flaggingMode) {
 		mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
 	}

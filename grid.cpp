@@ -409,7 +409,7 @@ int Grid::getFlaggedAmount() {
 // Drawing Grid Information
 void Grid::displayMinesLeft(ofTrueTypeFont& font) {
 	ofSetColor(0);
-	font.drawString("Mines Left: " + std::to_string(currentMines - flaggedCount), ofGetWidth() / 2 - boxSize, 50);
+	font.drawString("Mines Left: " + std::to_string(currentMines - flaggedCount), ofGetWidth() / 2 - boxSize * 3, 50);
 }
 
 // Runs 'display' function on all of box classes in boxes vector, to display whole grid
