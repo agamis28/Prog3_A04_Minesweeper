@@ -8,6 +8,7 @@ MinesweeperGame::MinesweeperGame() : boxSize{ 45.0f }, mineCount{ 10 } {}
 MinesweeperGame::MinesweeperGame(float sizeOfBox, int mineCount)
 	: boxSize{ sizeOfBox }, mineCount{ mineCount } {}
 
+// Setting up all aspects of minesweeper game
 void MinesweeperGame::setupGame() {
 	// Setting up gui
 	gui.setup();
@@ -38,6 +39,7 @@ void MinesweeperGame::setupGame() {
 	mainGrid.generateGrid();
 }
 
+// Update all aspects of minesweeper game
 void MinesweeperGame::updateGame() {
 	// When pressing restart button, generate new grid with corresponding gui given rows and columns (mines)
 	if (restartBtn) {
@@ -47,6 +49,7 @@ void MinesweeperGame::updateGame() {
 			mainGrid.generateGrid(gridRows, gridColumns, numberOfMines, boxSize);
 			gameInProgress = false;
 			timerCount = 0;
+			gameState = inProgress;
 		}
 		else {
 			// When too many mines set invalidGameSettings to true
@@ -67,12 +70,23 @@ void MinesweeperGame::updateGame() {
 	}
 }
 
+// Display all aspects of minesweeper game
 void MinesweeperGame::displayGame() {
 	// Drawing Grid
 	mainGrid.displayGrid(mineImage, flagImage, numberFont, textFont);
 
 	// Drawing gui
 	gui.draw();
+
+	// Drawing game lost and game won messages
+	if (gameState == gameLoss) {
+		ofSetColor(0);
+		textFont.drawString("SORRY, YOU UNCOVERED A MINE. YOU LOST. PLEASE TRY AGAIN ", ofGetWidth() / 2 - boxSize * 5, ofGetHeight() / 2 - boxSize * 5);
+	}
+	if (gameState == gameWon) {
+		ofSetColor(0);
+		textFont.drawString("YAY YOU WON! YOU UNCOVERED EVERYTHING BUT THE MINES! YOU BEAT THE GAME IN " + std::to_string(timerCount) + " SECONDS!", ofGetWidth() / 2 - boxSize * 8.5, ofGetHeight() / 2 - boxSize * 5);
+	}
 
 	// Draw Timer
 	ofSetColor(0);
@@ -86,24 +100,44 @@ void MinesweeperGame::displayGame() {
 	}
 }
 
+// When mouse moves, highlight the hovered box if hovering a box
 void MinesweeperGame::mouseMovedGame(int x, int y) {
-	// When mouse is moved, check the box it is hovered over on grid and changes its color
-	mainGrid.checkBoxHovered(x, y);
+	// While game is in progress
+	if (gameState == inProgress) {
+		// When mouse is moved, check the box it is hovered over on grid and changes its color
+		mainGrid.checkBoxHovered(x, y);
+	}
 }
 
+// When mouse is pressed, reveal the clicked box or flag it
 void MinesweeperGame::mousePressedGame(int x, int y) {
-	gameInProgress = true;
-	if (flaggingMode) {
-		mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
-	}
-	else {
-		// When mouse is pressed, reveal the clicked boxs
-		mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
-		if (mainGrid.isOnlyMinesRemaining()) {
-			std::cout << "GAME IS OVER, YOU WON!!";
+	// While game is in progress
+	if (gameState == inProgress) {
+
+		// Set game in progress back to true if false (for timer)
+		gameInProgress = true;
+
+		// When in flagging mode, flag the clicked box
+		if (flaggingMode) {
+			mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
 		}
-		if (mainGrid.isMineRevealed()) {
-			std::cout << "GAME IS OVER, YOU LOST!! TOO BAD LOSER";
+		else {
+			// When mouse is pressed, reveal the clicked boxs
+			mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
+
+			// Check if won the game
+			if (mainGrid.isOnlyMinesRemaining()) {
+				gameState = gameWon; // Set game won to stop functionality of game till restart
+				gameInProgress = false;
+				std::cout << "GAME IS OVER, YOU WON!!\n";
+			}
+
+			// Check if lost the game
+			if (mainGrid.isMineRevealed()) {
+				gameState = gameLoss; // Set game loss to stop functionality of game till restart
+				gameInProgress = false;
+				std::cout << "GAME IS OVER, YOU LOST!!\n";
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include <iostream>
 #include <chrono>
 #include <thread>
 #include <string>
@@ -16,6 +17,12 @@ class MinesweeperGame {
 	int mineCount;
 
 	// Private members for MinesweeperGame class
+	enum GameState {
+		inProgress,
+		gameLoss,
+		gameWon
+	};
+	GameState gameState = inProgress;
 	bool invalidGameSettings = false; // When invalid game settings is false, do not restart game
 	bool gameInProgress = false;
 	Grid mainGrid;
