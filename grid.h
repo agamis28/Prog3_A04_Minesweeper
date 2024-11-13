@@ -20,6 +20,9 @@ class Grid {
 	// Number of boxes flagged
 	int flaggedCount = 0;
 
+	// For game class
+	bool mineIsRevealed = false;
+
 public:
 	// Public Members
 	std::vector<Box>boxes;
@@ -41,6 +44,8 @@ public:
 	void revealClickedBox(int boxClicked);
 	void revealEmptyNeighbours(int boxIndex);
 	int getFlaggedAmount();
+	bool isMineRevealed();
+	bool isOnlyMinesRemaining();
 	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
 	void displayMinesLeft(ofTrueTypeFont& font);
 };

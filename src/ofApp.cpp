@@ -122,6 +122,12 @@ void ofApp::mousePressed(int x, int y, int button) {
 	else {
 		// When mouse is pressed, reveal the clicked box
 		mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
+		if (mainGrid.isOnlyMinesRemaining()) {
+			std::cout << "GAME IS OVER, YOU WON!!";
+		}
+		if (mainGrid.isMineRevealed()) {
+			std::cout << "GAME IS OVER, YOU LOST!! TOO BAD LOSER";
+		}
 	}
 }
 

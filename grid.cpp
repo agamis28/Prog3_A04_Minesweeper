@@ -309,6 +309,11 @@ void Grid::revealClickedBox(int clickedBox) {
 	// When box given (box clicked) is within boxes array AND box is not flagged continue functionality
 	if (clickedBox >= 0 && clickedBox <= currentRows * currentColumns && !boxes[clickedBox].getFlagged()) {
 
+		// If clicked box is a mine set mineIsRevealed to true
+		if (boxes[clickedBox].getMine()) {
+			mineIsRevealed = true;
+		}
+
 		// Only when clicking an empty, reveal other adjacent emptys
 		if (boxes[clickedBox].getAdjacent() == 0 && boxes[clickedBox].getMine() == false) {
 			revealEmptyNeighbours(clickedBox);
@@ -402,8 +407,45 @@ void Grid::revealEmptyNeighbours(int boxIndex) {
 
 }
 
+// Returns amount of flags are placed
 int Grid::getFlaggedAmount() {
 	return flaggedCount;
+}
+
+// Returns mine is revealed bool, used to check if game is over or not
+bool Grid::isMineRevealed() {
+	return mineIsRevealed;
+}
+
+// Check if only mines are remaining
+bool Grid::isOnlyMinesRemaining() {
+
+	// Initialize
+	int minesStillCovered = 0;
+	int boxesStillCovered = 0;
+
+	// When there is no mines revealed yet
+	if (!mineIsRevealed) {
+
+		// Loop through all boxes 
+		// Check if is currently revealed and if so decrement boxes still covered
+		// Check if is a mine and is not revealed. If it is under those conditions add to minesStillCoverd
+		for (Box box : boxes) {
+			if (!box.getRevealed()) {
+				boxesStillCovered++;
+			}
+
+			if (box.getMine() && !box.getRevealed()) {
+				minesStillCovered++;
+			}
+		}
+
+		// If mines still covered is equal to the number of mines, return true GAME IS WON
+		if (minesStillCovered == boxesStillCovered) {
+			return true;
+		}
+	}
+	return false;
 }
 
 // Drawing Grid Information
