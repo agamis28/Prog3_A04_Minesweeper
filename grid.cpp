@@ -224,6 +224,11 @@ void Grid::generateGrid() {
 
 	// Set Neighbours
 	setNeighbours();
+
+	// Reveal all on generate
+	//for (size_t i = 0; i < boxes.size(); i++) {
+	//	boxes[i].setReveal();
+	//}
 }
 
 // Uses parameters instead of default grid members
@@ -250,6 +255,11 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	// Set Neighbours
 	setNeighbours();
 
+	// Reveal all on generate
+	//for (size_t i = 0; i < boxes.size(); i++) {
+	//	boxes[i].setReveal();
+	//}
+
 	//int count = 0;
 	//for (Box& box : boxes) {
 	//	if (box.getMine()) {
@@ -272,6 +282,7 @@ void Grid::checkBoxHovered(float x, float y) {
 }
 
 int Grid::getClickedBox(float x, float y) {
+
 	// Loop through all boxes and see which one the given mouse positions it is on
 	for (size_t i = 0; i < boxes.size(); i++) {
 

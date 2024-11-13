@@ -65,7 +65,7 @@ void MinesweeperGame::updateGame() {
 		// If one second has passed, increment the timer count
 		if (currentTime - lastTime >= 1.0f) {
 			timerCount++;
-			lastTime = currentTime;  // Update last time to current time
+			lastTime = currentTime; // Update last time to current time
 		}
 	}
 

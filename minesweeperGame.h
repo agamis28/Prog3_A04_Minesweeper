@@ -2,8 +2,6 @@
 
 #include "ofMain.h"
 #include <iostream>
-#include <chrono>
-#include <thread>
 #include <string>
 #include "ofxGui.h"
 #include "Box.h"
