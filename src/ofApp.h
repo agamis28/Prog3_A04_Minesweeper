@@ -1,9 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
-#include "box.h"
-#include "grid.h"
+#include "minesweeperGame.h"
 
 class ofApp : public ofBaseApp {
 
@@ -24,21 +22,5 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
-	// OFX Initalized Variables
-	ofxPanel gui;
-
-	ofxIntSlider gridColumns;
-	ofxIntSlider gridRows;
-	ofxIntSlider numberOfMines;
-	ofxButton restartBtn;
-	ofxToggle flaggingMode;
-
-	// Initalizing Fonts
-	ofTrueTypeFont numberFont;
-	ofTrueTypeFont textFont;
-
-
-	// Images
-	ofImage mineImage;
-	ofImage flagImage;
+	MinesweeperGame minesweeperGame;
 };

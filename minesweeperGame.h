@@ -53,6 +53,6 @@ public:
 	void setupGame();
 	void updateGame();
 	void displayGame();
-	void mouseMovedGame(float mousePositionX, float mousePositionY);
-	void mousePressedGame(float mousePositionX, float mousePositionY);
+	void mouseMovedGame(int mousePositionX, int mousePositionY);
+	void mousePressedGame(int mousePositionX, int mousePositionY);
 };

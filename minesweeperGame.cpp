@@ -6,7 +6,7 @@ MinesweeperGame::MinesweeperGame() : boxSize{ 45.0f }, mineCount{ 10 } {}
 
 // Constructor With Parameters
 MinesweeperGame::MinesweeperGame(float sizeOfBox, int mineCount)
-	: boxSize{ sizeOfBox }, mineCount{ sizeOfBox } {}
+	: boxSize{ sizeOfBox }, mineCount{ mineCount } {}
 
 void MinesweeperGame::setupGame() {
 	// Setting up gui
@@ -86,12 +86,12 @@ void MinesweeperGame::displayGame() {
 	}
 }
 
-void MinesweeperGame::mouseMovedGame(float x, float y) {
+void MinesweeperGame::mouseMovedGame(int x, int y) {
 	// When mouse is moved, check the box it is hovered over on grid and changes its color
 	mainGrid.checkBoxHovered(x, y);
 }
 
-void MinesweeperGame::mousePressedGame(float x, float y) {
+void MinesweeperGame::mousePressedGame(int x, int y) {
 	gameInProgress = true;
 	if (flaggingMode) {
 		mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));

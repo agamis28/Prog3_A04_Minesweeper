@@ -232,8 +232,9 @@ void Grid::generateGrid(int rows, int columns, int mines, float boxSize) {
 	// Clear out old boxes if there is any
 	boxes.clear();
 
-	// Restart flagged count
+	// Restart
 	flaggedCount = 0;
+	mineIsRevealed = false;
 
 	// Changing current to parameter given values
 	currentRows = rows;
