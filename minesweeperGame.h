@@ -27,6 +27,13 @@ class MinesweeperGame {
 	bool gameInProgress = false;
 	Grid mainGrid;
 
+	// Screen Shake
+	bool isShaking = false;
+	float shakeDuration = 0.5f;
+	float shakeForce = 5.0f;
+	float shakeElapsedTime = 0;
+	ofVec2f shakePosition;
+
 	// Timer
 	int timerCount = 0;
 	float lastTime = 0;

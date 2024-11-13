@@ -68,15 +68,37 @@ void MinesweeperGame::updateGame() {
 			lastTime = currentTime;  // Update last time to current time
 		}
 	}
+
+	// Shaking
+	// If is shaking is active shake for shake duration with shake force random radius of shake
+	if (isShaking) {
+
+		// Add random shake position each frame
+		shakePosition.x = ofRandom(-shakeForce, shakeForce);
+		shakePosition.y = ofRandom(-shakeForce, shakeForce);
+
+		// Add time of last frame to  the shake time
+		shakeElapsedTime += ofGetLastFrameTime();
+
+		// Stop shaking when elapsed time surpasses the duration
+		if (shakeElapsedTime >= shakeDuration) {
+			isShaking = false;
+			shakePosition.set(0, 0);
+			shakeElapsedTime = 0;
+		}
+	}
 }
 
 // Display all aspects of minesweeper game
 void MinesweeperGame::displayGame() {
+
+	// Keep screen shake only elements inside of matrix
+	ofPushMatrix();
+	// Move all elements to the shaked position if there is any
+	ofTranslate(shakePosition);
+
 	// Drawing Grid
 	mainGrid.displayGrid(mineImage, flagImage, numberFont, textFont);
-
-	// Drawing gui
-	gui.draw();
 
 	// Drawing game lost and game won messages
 	if (gameState == gameLoss) {
@@ -98,6 +120,12 @@ void MinesweeperGame::displayGame() {
 		ofDrawBitmapStringHighlight("for the number of boxes!", ofGetWidth() / 2 - 30, ofGetHeight() / 2 + 25);
 		ofDrawBitmapStringHighlight("Please Try Again", ofGetWidth() / 2, ofGetHeight() / 2 + 50);
 	}
+
+	// Reset matrix to normal
+	ofPopMatrix();
+
+	// Drawing gui
+	gui.draw();
 }
 
 // When mouse moves, highlight the hovered box if hovering a box
@@ -136,6 +164,7 @@ void MinesweeperGame::mousePressedGame(int x, int y) {
 			// Check if lost the game
 			if (mainGrid.isMineRevealed()) {
 				mainGrid.revealAllMines(); // When losing reveal all mines
+				isShaking = true; // Turn on screen shake, auto turn off after duration in update
 				gameInProgress = false;
 				std::cout << "GAME IS OVER, YOU LOST!!\n";
 				gameState = gameLoss; // Set game loss to stop functionality of game till restart
