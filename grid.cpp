@@ -309,7 +309,7 @@ void Grid::revealClickedBox(int clickedBox) {
 	// When box given (box clicked) is within boxes array AND box is not flagged continue functionality
 	if (clickedBox >= 0 && clickedBox <= currentRows * currentColumns && !boxes[clickedBox].getFlagged()) {
 
-		// If clicked box is a mine set mineIsRevealed to true
+		// If clicked box is a mine set mine
 		if (boxes[clickedBox].getMine()) {
 			mineIsRevealed = true;
 		}
