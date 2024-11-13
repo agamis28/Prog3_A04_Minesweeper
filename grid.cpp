@@ -449,6 +449,34 @@ bool Grid::isOnlyMinesRemaining() {
 	return false;
 }
 
+// When winning game flag all remaining none revealed mines
+void Grid::flagAllRemaining() {
+
+	// Loop through all boxes
+	for (size_t i = 0; i < boxes.size(); i++) {
+
+		// If a mine and not flagged, flag it
+		if (boxes[i].getMine() && !boxes[i].getFlagged()) {
+			boxes[i].toggleFlag();
+		}
+	}
+
+}
+
+// When losing game uncover all remaining none revealed mines
+void Grid::revealAllMines() {
+
+	// Loop through all boxes
+	for (size_t i = 0; i < boxes.size(); i++) {
+
+		// If a mine and not revealed, reveal it
+		if (boxes[i].getMine() && !boxes[i].getRevealed()) {
+			boxes[i].setReveal();
+		}
+	}
+
+}
+
 // Drawing Grid Information
 void Grid::displayMinesLeft(ofTrueTypeFont& font) {
 	ofSetColor(0);

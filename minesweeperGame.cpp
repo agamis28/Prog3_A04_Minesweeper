@@ -127,16 +127,18 @@ void MinesweeperGame::mousePressedGame(int x, int y) {
 
 			// Check if won the game
 			if (mainGrid.isOnlyMinesRemaining()) {
-				gameState = gameWon; // Set game won to stop functionality of game till restart
+				mainGrid.flagAllRemaining(); // When winning flag all mines
 				gameInProgress = false;
 				std::cout << "GAME IS OVER, YOU WON!!\n";
+				gameState = gameWon; // Set game won to stop functionality of game till restart
 			}
 
 			// Check if lost the game
 			if (mainGrid.isMineRevealed()) {
-				gameState = gameLoss; // Set game loss to stop functionality of game till restart
+				mainGrid.revealAllMines(); // When losing reveal all mines
 				gameInProgress = false;
 				std::cout << "GAME IS OVER, YOU LOST!!\n";
+				gameState = gameLoss; // Set game loss to stop functionality of game till restart
 			}
 		}
 	}

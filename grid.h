@@ -46,6 +46,8 @@ public:
 	int getFlaggedAmount();
 	bool isMineRevealed();
 	bool isOnlyMinesRemaining();
+	void flagAllRemaining();
+	void revealAllMines();
 	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
 	void displayMinesLeft(ofTrueTypeFont& font);
 };
