@@ -139,37 +139,47 @@ void MinesweeperGame::mouseMovedGame(int x, int y) {
 }
 
 // When mouse is pressed, reveal the clicked box or flag it
-void MinesweeperGame::mousePressedGame(int x, int y) {
+void MinesweeperGame::mousePressedGame(int x, int y, int button) {
 	// While game is in progress
 	if (gameState == inProgress) {
 
 		// Set game in progress back to true if false (for timer)
 		gameInProgress = true;
 
-		// When in flagging mode, flag the clicked box
-		if (flaggingMode) {
+		// When right clicking use flagging mode
+		if (button == OF_MOUSE_BUTTON_RIGHT) {
 			mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
 		}
-		else {
-			// When mouse is pressed, reveal the clicked boxs
-			mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
 
-			// Check if won the game
-			if (mainGrid.isOnlyMinesRemaining()) {
-				mainGrid.flagAllRemaining(); // When winning flag all mines
-				gameInProgress = false;
-				std::cout << "GAME IS OVER, YOU WON!!\n";
-				gameState = gameWon; // Set game won to stop functionality of game till restart
+		// When left clicking use regular mode unless flagging mode is set
+		if (button == OF_MOUSE_BUTTON_LEFT) {
+
+			// When in flagging mode, flag the clicked box
+			if (flaggingMode) {
+				mainGrid.flagClickedBox(mainGrid.getClickedBox(x, y));
+			}
+			else {
+				// When mouse is pressed, reveal the clicked boxs
+				mainGrid.revealClickedBox(mainGrid.getClickedBox(x, y));
+
+				// Check if won the game
+				if (mainGrid.isOnlyMinesRemaining()) {
+					mainGrid.flagAllRemaining(); // When winning flag all mines
+					gameInProgress = false;
+					std::cout << "GAME IS OVER, YOU WON!!\n";
+					gameState = gameWon; // Set game won to stop functionality of game till restart
+				}
+
+				// Check if lost the game
+				if (mainGrid.isMineRevealed()) {
+					mainGrid.revealAllMines(); // When losing reveal all mines
+					isShaking = true; // Turn on screen shake, auto turn off after duration in update
+					gameInProgress = false;
+					std::cout << "GAME IS OVER, YOU LOST!!\n";
+					gameState = gameLoss; // Set game loss to stop functionality of game till restart
+				}
 			}
 
-			// Check if lost the game
-			if (mainGrid.isMineRevealed()) {
-				mainGrid.revealAllMines(); // When losing reveal all mines
-				isShaking = true; // Turn on screen shake, auto turn off after duration in update
-				gameInProgress = false;
-				std::cout << "GAME IS OVER, YOU LOST!!\n";
-				gameState = gameLoss; // Set game loss to stop functionality of game till restart
-			}
 		}
 	}
 }

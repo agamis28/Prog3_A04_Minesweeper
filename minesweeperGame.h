@@ -69,5 +69,5 @@ public:
 	void updateGame();
 	void displayGame();
 	void mouseMovedGame(int mousePositionX, int mousePositionY);
-	void mousePressedGame(int mousePositionX, int mousePositionY);
+	void mousePressedGame(int mousePositionX, int mousePositionY, int mouseButtonClicked);
 };
