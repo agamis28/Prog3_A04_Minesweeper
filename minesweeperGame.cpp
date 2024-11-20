@@ -20,11 +20,12 @@ void MinesweeperGame::setupGame() {
 
 	//gui.add(flaggingMode.setup("Flagging Mode", false));
 
-	// Setting up mine image
-	mineImage.load("mineImage.png");
-
-	// Setting up flag image
-	flagImage.load("flagImage.png");
+	// Setting up images
+	backgroundImage.load("MinesweeperTile000.png");
+	coverImage.load("MinesweeperTile001.png");
+	mineImage.load("MinesweeperTile002.png");
+	flagImage.load("MinesweeperTile004.png");
+	hitMineImage.load("MinesweeperTile003.png");
 
 	// Setting up fonts
 	numberFont.load("VCR_OSD_MONO_1.001.ttf", boxSize / 2);
@@ -98,7 +99,7 @@ void MinesweeperGame::displayGame() {
 	ofTranslate(shakePosition);
 
 	// Drawing Grid
-	mainGrid.displayGrid(mineImage, flagImage, numberFont, textFont);
+	mainGrid.displayGrid(backgroundImage, coverImage, mineImage, flagImage, hitMineImage, numberFont, textFont);
 
 	// Drawing game lost and game won messages
 	if (gameState == gameLoss) {

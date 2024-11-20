@@ -48,6 +48,6 @@ public:
 	bool isOnlyMinesRemaining();
 	void flagAllRemaining();
 	void revealAllMines();
-	void displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
+	void displayGrid(ofImage& backgroundImage, ofImage& coverImage, ofImage& mineImage, ofImage& flagImage, ofImage& hitMineImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont);
 	void displayMinesLeft(ofTrueTypeFont& font);
 };

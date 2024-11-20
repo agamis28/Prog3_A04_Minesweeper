@@ -51,8 +51,11 @@ class MinesweeperGame {
 
 
 	// Images
+	ofImage backgroundImage;
+	ofImage coverImage;
 	ofImage mineImage;
 	ofImage flagImage;
+	ofImage hitMineImage;
 
 public:
 

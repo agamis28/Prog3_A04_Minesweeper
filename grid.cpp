@@ -496,9 +496,9 @@ void Grid::displayMinesLeft(ofTrueTypeFont& font) {
 
 // Runs 'display' function on all of box classes in boxes vector, to display whole grid
 // Takes in a loaded image and font to give to box class
-void Grid::displayGrid(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont) {
+void Grid::displayGrid(ofImage& backgroundImage, ofImage& coverImage, ofImage& mineImage, ofImage& flagImage, ofImage& hitMineImage, ofTrueTypeFont& numberFont, ofTrueTypeFont& textFont) {
 	for (Box& box : boxes) {
-		box.display(mineImage, flagImage, numberFont);
+		box.display(backgroundImage, coverImage, mineImage, flagImage, hitMineImage, numberFont);
 	}
 	displayMinesLeft(textFont);
 }

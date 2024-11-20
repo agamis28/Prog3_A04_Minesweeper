@@ -68,28 +68,42 @@ bool Box::containsPosition(float x, float y) {
 }
 
 // Displays box when not revealed. When revealed only show background draw squares. If revealed and is mine show a mine image. If revealed and has adjacent mines, draw those associated numbers.
-void Box::display(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& font) {
+void Box::display(ofImage& backgroundImage, ofImage& coverImage, ofImage& mineImage, ofImage& flagImage, ofImage& hitMineImage, ofTrueTypeFont& font) {
 
 	// When not revealed draw default box
 	if (!revealed) {
-		// Outline
-		ofSetColor(0);
-		ofDrawRectangle(position.x, position.y, boxSize, boxSize);
+		//// Outline
+		//ofSetColor(0);
+		//ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-		// Background
-		ofSetColor(255);
-		ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+		//// Background
+		//ofSetColor(255);
+		//ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
-		// Cover
-		ofSetColor(boxInnerColor);
-		ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+		//// Cover
+		//ofSetColor(boxInnerColor);
+		//ofDrawRectangle(position.x + (boxSize * 0.2f), position.y + (boxSize * 0.2f), boxSize - (boxSize * 0.4f), boxSize - (boxSize * 0.4f));
+
+		// Draw background image when image is allocated
+		if (backgroundImage.isAllocated()) {
+			// Background Image
+			ofSetColor(255);
+			backgroundImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize, boxSize);
+		}
+
+		// Draw covered box image when image is allocated
+		if (coverImage.isAllocated()) {
+			// Cover Image
+			ofSetColor(255);
+			coverImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize, boxSize);
+		}
 
 		if (flagged) {
 			// Draw flag image when image is allocated
 			if (flagImage.isAllocated()) {
 				// Flag Image
 				ofSetColor(255);
-				flagImage.draw(position.x + (boxSize * 0.25f), position.y + (boxSize * 0.25f), (boxSize * 0.6f), (boxSize * 0.6f) * 0.94f);
+				flagImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize, boxSize);
 			}
 		}
 	}
@@ -99,35 +113,42 @@ void Box::display(ofImage& mineImage, ofImage& flagImage, ofTrueTypeFont& font) 
 		// If isMine, display mine
 		// Else display number of adjacent mines, if no adjacent mines show empty
 		if (isMine) {
-			// Outline
-			ofSetColor(0);
-			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
+			//// Outline
+			//ofSetColor(0);
+			//ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-			// Background
-			ofSetColor(255);
-			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+			//// Background
+			//ofSetColor(255);
+			//ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
 
 			// Draw mine image when image is allocated
 			if (mineImage.isAllocated()) {
 				// Mine Image
 				ofSetColor(255);
-				mineImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize * 0.70f, (boxSize * 0.70f) * 0.94);
+				mineImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize, boxSize);
 			}
 		}
 		else {
-			// Outline
-			ofSetColor(0);
-			ofDrawRectangle(position.x, position.y, boxSize, boxSize);
+			//// Outline
+			//ofSetColor(0);
+			//ofDrawRectangle(position.x, position.y, boxSize, boxSize);
 
-			// Background
-			ofSetColor(255);
-			ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+			//// Background
+			//ofSetColor(255);
+			//ofDrawRectangle(position.x + (boxSize * 0.1f), position.y + (boxSize * 0.1f), boxSize - (boxSize * 0.2f), boxSize - (boxSize * 0.2f));
+
+			// Draw background image when image is allocated
+			if (backgroundImage.isAllocated()) {
+				// Background Image
+				ofSetColor(255);
+				backgroundImage.draw(position.x + (boxSize / 8), position.y + (boxSize / 6), boxSize, boxSize);
+			}
 
 			// When there is adjacent mines display a number
 			if (numberOfAdjacentMines != 0) {
 				// Use font and display number of 'numberOfAdjacentMines'
 				ofSetColor(0);
-				font.drawString(std::to_string(numberOfAdjacentMines), position.x + (boxSize / 3), position.y + (boxSize / 1.25f));
+				font.drawString(std::to_string(numberOfAdjacentMines), position.x + (boxSize / 2), position.y + (boxSize / 1.10f));
 			}
 		}
 	}
